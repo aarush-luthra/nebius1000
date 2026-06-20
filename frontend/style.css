@@ -1004,13 +1004,32 @@ html, body {
 .panel-responses {
   flex: 1;
   overflow-y: auto;
-  padding: 18px 22px;
+  padding: 18px 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
-.panel-response-block { animation: fadeUp 0.22s ease; }
+/* User chat bubble — right-aligned, WhatsApp-style */
+.panel-user-bubble {
+  align-self: flex-end;
+  max-width: 78%;
+  background: rgba(122, 48, 32, 0.07);
+  border: 1px solid var(--terra-dim);
+  border-radius: 14px 14px 2px 14px;
+  padding: 8px 13px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+  animation: fadeUp 0.18s ease;
+}
+
+.panel-response-block {
+  animation: fadeUp 0.22s ease;
+  align-self: flex-start;
+  max-width: 92%;
+}
 
 .panel-response-q {
   font-family: var(--mono);

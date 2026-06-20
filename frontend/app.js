@@ -98,8 +98,9 @@ const App = {
     const targets = state.directTarget ? [state.directTarget] : [...state.selected];
     this.clearDirectTarget();
 
-    // Add user message to room feed
+    // Add user message to room feed and panels
     appendRoomUserMessage(question);
+    appendPanelUserMessage(question, targets);
 
     // Hide empty state
     document.getElementById('room-empty')?.remove();
@@ -203,11 +204,15 @@ function onThinkerStart(id) {
   // Create room message placeholder, capture its ID
   const msgId = createRoomMessagePlaceholder(id, thinker);
   if (state.streamBufs[id]) state.streamBufs[id].msgId = msgId;
-  // Reset panel thinking
-  const pt = document.getElementById(`panel-thinking-${id}`);
-  if (pt) pt.textContent = '';
-  const pr = document.getElementById(`panel-response-current-${id}`);
-  if (pr) pr.textContent = '';
+  // Create a fresh live-streaming element in the panel and append after user bubble
+  const responsesEl = document.getElementById(`panel-responses-${id}`);
+  if (responsesEl && state.streamBufs[id]) {
+    const liveEl = document.createElement('div');
+    liveEl.className = 'panel-response-text stream-cursor';
+    responsesEl.appendChild(liveEl);
+    state.streamBufs[id].panelLiveEl = liveEl;
+    responsesEl.scrollTop = responsesEl.scrollHeight;
+  }
 }
 
 function onThinkerChunk(id, content, isThinking) {
@@ -223,9 +228,12 @@ function onThinkerChunk(id, content, isThinking) {
     if (buf.roomThinkEl) buf.roomThinkEl.textContent = buf.thinking;
   } else {
     buf.response += content;
-    // Update panel response
-    const pr = document.getElementById(`panel-response-current-${id}`);
-    if (pr) { pr.textContent = buf.response; pr.classList.add('stream-cursor'); }
+    // Update panel live element
+    if (buf.panelLiveEl) {
+      buf.panelLiveEl.textContent = buf.response;
+      const rEl = buf.panelLiveEl.closest('.panel-responses');
+      if (rEl) rEl.scrollTop = rEl.scrollHeight;
+    }
     // Update room message text (this round's element)
     if (buf.roomTextEl) { buf.roomTextEl.textContent = buf.response; buf.roomTextEl.classList.add('stream-cursor'); }
     scrollRoomToBottom();
@@ -244,7 +252,7 @@ function onThinkerEnd(id) {
 
   // Remove streaming cursors
   document.getElementById(`panel-thinking-${id}`)?.classList.remove('stream-cursor');
-  document.getElementById(`panel-response-current-${id}`)?.classList.remove('stream-cursor');
+  buf.panelLiveEl?.classList.remove('stream-cursor');
   buf.roomTextEl?.classList.remove('stream-cursor');
 
   // Remove speaking state from dining table seat
@@ -331,12 +339,24 @@ function buildPanels() {
       </div>
 
       <div class="panel-responses" id="panel-responses-${id}">
-        <div class="panel-response-text stream-cursor" id="panel-response-current-${id}"></div>
         <div class="panel-empty">The chamber awaits your question.</div>
       </div>
     `;
 
     container.appendChild(panel);
+  });
+}
+
+function appendPanelUserMessage(text, targets) {
+  targets.forEach(id => {
+    const responsesEl = document.getElementById(`panel-responses-${id}`);
+    if (!responsesEl) return;
+    responsesEl.querySelector('.panel-empty')?.remove();
+    const bubble = document.createElement('div');
+    bubble.className = 'panel-user-bubble';
+    bubble.textContent = text;
+    responsesEl.appendChild(bubble);
+    responsesEl.scrollTop = responsesEl.scrollHeight;
   });
 }
 
@@ -346,18 +366,17 @@ function archivePanelResponse(id, buf) {
   const responsesEl = document.getElementById(`panel-responses-${id}`);
   if (!responsesEl) return;
 
-  // Remove empty state
-  responsesEl.querySelector('.panel-empty')?.remove();
-
-  // Clear the live text node
-  const liveEl = document.getElementById(`panel-response-current-${id}`);
-  if (liveEl) liveEl.textContent = '';
-
-  // Add archived block at top
+  // Replace live streaming element with a styled response block
   const block = document.createElement('div');
   block.className = 'panel-response-block';
   block.innerHTML = `<div class="panel-response-text">${escHtml(buf.response)}</div>`;
-  responsesEl.insertBefore(block, responsesEl.firstChild);
+
+  if (buf.panelLiveEl && buf.panelLiveEl.parentNode === responsesEl) {
+    responsesEl.replaceChild(block, buf.panelLiveEl);
+  } else {
+    responsesEl.appendChild(block);
+  }
+  responsesEl.scrollTop = responsesEl.scrollHeight;
 }
 
 /* ── Dining table builder ────────────────────────────────────────────────── */
