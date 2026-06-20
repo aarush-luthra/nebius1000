@@ -265,58 +265,32 @@ function onThinkerEnd(id) {
 
 /* ── Room view rendering ──────────────────────────────────────────────────── */
 function createRoomMessagePlaceholder(id, thinker) {
-  const feed = document.getElementById('room-feed');
-  const msgId = `room-msg-${id}-${Date.now()}`;
-
-  const div = document.createElement('div');
-  div.className = 'room-msg';
-  div.id = msgId;
-
-  div.innerHTML = `
-    <div class="msg-avatar" style="background:${thinker.color}">
-      ${thinker.image
-        ? `<img src="${thinker.image}" alt="${thinker.name}" onerror="this.onerror=null;this.src=this.src.replace('.png','.svg')" />`
-        : thinker.initials}
-    </div>
-    <div class="msg-body">
-      <div class="msg-meta">
-        <span class="msg-name" style="color:${thinker.color}">${thinker.name}</span>
-        <span class="msg-model-tag">${thinker.model ? thinker.model.split('/').pop() : ''}</span>
-        <button class="msg-think-toggle" onclick="toggleThinking('${msgId}')">[show thinking]</button>
-        <button class="msg-reply-btn" onclick="App.setDirectTarget('${id}')" title="Direct a follow-up to ${thinker.name}">[↩ reply]</button>
-      </div>
-      <div class="msg-thinking" id="room-thinking-${id}"></div>
-      <div class="msg-text stream-cursor" id="room-msg-text-${id}"
-           style="border-left-color:${thinker.color}40"></div>
-    </div>
-  `;
-
-  feed.appendChild(div);
-  scrollRoomToBottom();
-  return msgId;
+  // In room view the text target lives inside the seat, not in a feed.
+  const textEl = document.getElementById(`room-msg-text-${id}`);
+  if (textEl) {
+    textEl.innerHTML = '';
+    textEl.classList.add('stream-cursor');
+  }
+  // Hide the global empty overlay once debate starts
+  const emptyOverlay = document.getElementById('room-empty');
+  if (emptyOverlay) emptyOverlay.style.display = 'none';
+  // Return the seat text element id — this is buf.msgId
+  return `room-msg-text-${id}`;
 }
 
 function appendRoomUserMessage(text) {
-  const feed = document.getElementById('room-feed');
-  const div = document.createElement('div');
-  div.className = 'room-msg user-msg';
-  div.innerHTML = `
-    <div class="msg-body">
-      <div class="msg-meta"><span class="msg-name" style="color:var(--text-muted)">You</span></div>
-      <div class="msg-text">${escHtml(text)}</div>
-    </div>
-  `;
-  feed.appendChild(div);
-  scrollRoomToBottom();
+  const strip = document.getElementById('room-question-strip');
+  if (!strip) return;
+  strip.textContent = text;
+  strip.classList.add('visible');
 }
 
 function appendRoomSystemMessage(text) {
-  const feed = document.getElementById('room-feed');
-  const div = document.createElement('div');
-  div.className = 'room-msg';
-  div.innerHTML = `<div class="msg-body"><div class="msg-text" style="color:var(--text-muted);font-style:italic">${escHtml(text)}</div></div>`;
-  feed.appendChild(div);
-  scrollRoomToBottom();
+  // Surface errors in the question strip so the user sees them
+  const strip = document.getElementById('room-question-strip');
+  if (!strip) return;
+  strip.textContent = text;
+  strip.classList.add('visible');
 }
 
 function toggleThinking(msgId) {
@@ -330,8 +304,7 @@ function toggleThinking(msgId) {
 }
 
 function scrollRoomToBottom() {
-  const feed = document.getElementById('room-feed');
-  if (feed) feed.scrollTop = feed.scrollHeight;
+  // No-op: room view seats are fixed positions, not a scrolling feed.
 }
 
 /* ── Panels view rendering ────────────────────────────────────────────────── */
@@ -412,47 +385,66 @@ function buildDiningTable() {
     table.appendChild(candle);
   });
 
-  // Seat positions relative to scene center (scene is 290px tall, table centered)
-  const POSITIONS = {
-    2: [{ x: -218, y: 0 }, { x: 218, y: 0 }],
-    3: [{ x: -218, y: -30 }, { x: 218, y: -30 }, { x: 0, y: 108 }],
-  };
   const n = state.selected.length;
-  const positions = POSITIONS[n] || POSITIONS[2];
-  // Scene vertical center: 145px from top
-  const sceneMidY = 145;
+
+  // Seat = portrait(92px) + gap(12px) + speech(210px) = 314px wide.
+  // Table is 360px wide (±180px from center). Use 215px so seats clear the table.
+  // Left seats: anchor RIGHT edge; right seats: anchor LEFT edge.
+  const CSS_POS = {
+    2: [
+      { right: 'calc(50% + 215px)', top: '50%',              transform: 'translateY(-50%)' },
+      { left:  'calc(50% + 215px)', top: '50%',              transform: 'translateY(-50%)' },
+    ],
+    3: [
+      { right: 'calc(50% + 215px)', top: 'calc(50% - 85px)', transform: '' },
+      { left:  'calc(50% + 215px)', top: 'calc(50% - 85px)', transform: '' },
+      { left:  '50%',               top: 'calc(50% + 95px)', transform: 'translateX(-50%)' },
+    ],
+  };
+  const positions = CSS_POS[n] || CSS_POS[2];
 
   state.selected.forEach((id, i) => {
     const t = getThinker(id);
     const pos = positions[i] || positions[0];
+
     const seat = document.createElement('div');
     seat.className = 'table-seat';
     seat.id = `table-seat-${id}`;
-    seat.title = `Direct a question to ${t.name}`;
-    seat.onclick = () => App.setDirectTarget(id);
-    // Portrait is 88×106, name ~20px → total ~126px; anchor at portrait top-center
-    seat.style.cssText = `position:absolute;left:calc(50% + ${pos.x - 44}px);top:${sceneMidY + pos.y - 63}px;`;
+
+    const styleStr = Object.entries(pos)
+      .filter(([, v]) => v !== '')
+      .map(([k, v]) => `${k}:${v}`)
+      .join(';');
+    seat.style.cssText = styleStr;
+
     seat.innerHTML = `
-      <div class="table-seat-portrait" style="border-color:${t.color}40">
+      <div class="table-seat-portrait" style="border-color:${t.color}40"
+           onclick="App.setDirectTarget('${id}')" title="Ask ${t.name} directly">
         ${t.image
           ? `<img src="${t.image}" alt="${t.name}" onerror="this.onerror=null;this.src=this.src.replace('.png','.svg')">`
           : `<div class="table-seat-initials" style="color:${t.color}">${t.initials}</div>`}
       </div>
-      <div class="table-seat-name">${t.name.split(' ')[0]}</div>
+      <div class="seat-speech">
+        <div class="seat-speaker-label" style="color:${t.color}"
+             onclick="App.setDirectTarget('${id}')">${t.name}</div>
+        <div class="seat-message-text" id="room-msg-text-${id}">
+          <span class="seat-empty">Awaiting the debate…</span>
+        </div>
+        <button class="seat-reply-btn" onclick="App.setDirectTarget('${id}')">[↩ reply to ${t.name.split(' ')[0]}]</button>
+      </div>
     `;
+
     scene.appendChild(seat);
   });
 }
 
 /* ── Interactive text ────────────────────────────────────────────────────── */
 function makeTextInteractive(id, msgId) {
-  const msgEl = document.getElementById(msgId);
-  if (!msgEl) return;
-  const textEl = msgEl.querySelector(`#room-msg-text-${id}`);
+  // msgId IS the text element's id (room-msg-text-{id})
+  const textEl = document.getElementById(msgId);
   if (!textEl || !textEl.textContent.trim()) return;
 
   const rawText = textEl.textContent;
-  // Wrap each whitespace-separated token in a clickable span
   const html = rawText.split(/(\s+)/).map(token => {
     if (/^\s+$/.test(token)) return token.replace(/\n/g, '<br>');
     const safe = token.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -462,9 +454,9 @@ function makeTextInteractive(id, msgId) {
 
   textEl.innerHTML = html;
 
-  // Show the reply button
-  const replyBtn = msgEl.querySelector('.msg-reply-btn');
-  if (replyBtn) replyBtn.classList.add('visible');
+  // Show the per-seat reply button
+  const seat = document.getElementById(`table-seat-${id}`);
+  if (seat) seat.querySelector('.seat-reply-btn')?.classList.add('visible');
 }
 
 /* ── Build debate UI ─────────────────────────────────────────────────────── */
@@ -489,12 +481,11 @@ function buildDebateUI() {
   // Dining table seats
   buildDiningTable();
 
-  // Clear room feed (keep empty state)
-  const feed = document.getElementById('room-feed');
-  feed.innerHTML = `<div class="room-empty-state" id="room-empty">
-    <p>The chamber awaits your question.</p>
-    <p class="muted">Type below to open the debate.</p>
-  </div>`;
+  // Reset question strip and empty overlay
+  const strip = document.getElementById('room-question-strip');
+  if (strip) { strip.textContent = ''; strip.classList.remove('visible'); }
+  const emptyOverlay = document.getElementById('room-empty');
+  if (emptyOverlay) emptyOverlay.style.display = '';
 
   // Build panels
   buildPanels();

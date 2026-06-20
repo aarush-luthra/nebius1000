@@ -198,19 +198,24 @@
 
     <!-- ROOM VIEW -->
     <div id="room-view" class="debate-view active">
-      <!-- Dining table scene — thinker seats injected here by JS -->
+      <!-- Last question asked -->
+      <div class="room-question-strip" id="room-question-strip"></div>
+
+      <!-- Full-height dining table scene; seats injected by JS -->
       <div class="room-table-scene" id="room-table-scene">
+        <!-- Oval table centered -->
         <div class="dining-table" id="dining-table">
-          <!-- candles injected by JS -->
           <div class="dining-table-label">THE CHAMBER<br/>OF MINDS</div>
         </div>
-      </div>
-      <div class="room-feed" id="room-feed">
-        <div class="room-empty-state" id="room-empty">
-          <p class="empty-main">The chamber awaits your question.</p>
+        <!-- Empty state overlay on table -->
+        <div class="room-empty-overlay" id="room-empty">
+          <p class="empty-main">The chamber awaits.</p>
           <p class="empty-sub">[Type below to open the debate]</p>
         </div>
       </div>
+
+      <!-- Hidden feed kept for JS error fallback only -->
+      <div class="room-feed" id="room-feed" style="display:none"></div>
     </div>
 
     <!-- PANELS VIEW -->
