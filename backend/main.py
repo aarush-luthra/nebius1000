@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 from pathlib import Path
@@ -16,7 +17,7 @@ load_dotenv()
 
 app = FastAPI()
 
-NEBIUS_API_KEY = os.environ.get("NEBIUS_API_KEY")
+NEBIUS_API_KEY = (os.environ.get("NEBIUS_API_KEY") or "").strip()
 
 client = AsyncOpenAI(
     base_url="https://api.studio.nebius.ai/v1/",
@@ -67,12 +68,14 @@ async def stream_thinker(thinker_id: str, question: str, history: list[dict]):
     yield f"data: {json.dumps({'type': 'start', 'thinker': thinker_id})}\n\n"
 
     try:
+        extra = thinker.get("extra_body")
         stream = await client.chat.completions.create(
             model=thinker["model"],
             messages=messages,
             stream=True,
-            max_tokens=400,
+            max_tokens=700,
             temperature=0.85,
+            **({"extra_body": extra} if extra else {}),
         )
 
         buffer = ""
@@ -124,13 +127,32 @@ async def stream_thinker(thinker_id: str, question: str, history: list[dict]):
 
 
 async def debate_generator(req: DebateRequest):
-    for thinker_id in req.thinkers:
+    # Fan out to every thinker concurrently and interleave their events as they
+    # arrive, so all of them think and stream in parallel instead of waiting in
+    # a queue behind each other.
+    queue: asyncio.Queue = asyncio.Queue()
+
+    async def run(thinker_id: str):
         history = []
         if req.histories and thinker_id in req.histories:
             history = [{"role": m.role, "content": m.content} for m in req.histories[thinker_id]]
-
         async for event in stream_thinker(thinker_id, req.question, history):
+            await queue.put(event)
+
+    async def runner():
+        await asyncio.gather(*(run(t) for t in req.thinkers))
+        await queue.put(None)  # sentinel: all thinkers done
+
+    task = asyncio.create_task(runner())
+
+    try:
+        while True:
+            event = await queue.get()
+            if event is None:
+                break
             yield event
+    finally:
+        task.cancel()
 
     yield f"data: {json.dumps({'type': 'done'})}\n\n"
 

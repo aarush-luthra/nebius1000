@@ -207,17 +207,15 @@ function onThinkerChunk(id, content, isThinking) {
     // Update panel thinking
     const pt = document.getElementById(`panel-thinking-${id}`);
     if (pt) { pt.textContent = buf.thinking; pt.classList.add('stream-cursor'); }
-    // Room message thinking buffer
-    const rt = document.getElementById(`room-thinking-${id}`);
-    if (rt) rt.textContent = buf.thinking;
+    // Room message thinking buffer (this round's element)
+    if (buf.roomThinkEl) buf.roomThinkEl.textContent = buf.thinking;
   } else {
     buf.response += content;
     // Update panel response
     const pr = document.getElementById(`panel-response-current-${id}`);
     if (pr) { pr.textContent = buf.response; pr.classList.add('stream-cursor'); }
-    // Update room message text
-    const rm = document.getElementById(`room-msg-text-${id}`);
-    if (rm) { rm.textContent = buf.response; rm.classList.add('stream-cursor'); }
+    // Update room message text (this round's element)
+    if (buf.roomTextEl) { buf.roomTextEl.textContent = buf.response; buf.roomTextEl.classList.add('stream-cursor'); }
     scrollRoomToBottom();
   }
 }
@@ -235,7 +233,7 @@ function onThinkerEnd(id) {
   // Remove streaming cursors
   document.getElementById(`panel-thinking-${id}`)?.classList.remove('stream-cursor');
   document.getElementById(`panel-response-current-${id}`)?.classList.remove('stream-cursor');
-  document.getElementById(`room-msg-text-${id}`)?.classList.remove('stream-cursor');
+  buf.roomTextEl?.classList.remove('stream-cursor');
 
   // Remove speaking state
   document.getElementById(`seat-${id}`)?.classList.remove('speaking');
@@ -257,8 +255,6 @@ function createRoomMessagePlaceholder(id, thinker) {
   div.className = 'room-msg';
   div.id = msgId;
 
-  const hasThinking = true; // we optimistically show think toggle
-
   div.innerHTML = `
     <div class="msg-avatar" style="background:${thinker.color}">
       ${thinker.image
@@ -271,13 +267,22 @@ function createRoomMessagePlaceholder(id, thinker) {
         <span class="msg-model-tag">${thinker.model ? thinker.model.split('/').pop() : ''}</span>
         <button class="msg-think-toggle" onclick="toggleThinking('${msgId}')">[show thinking]</button>
       </div>
-      <div class="msg-thinking" id="room-thinking-${id}"></div>
-      <div class="msg-text stream-cursor" id="room-msg-text-${id}"
+      <div class="msg-thinking"></div>
+      <div class="msg-text stream-cursor"
            style="border-left-color:${thinker.color}40"></div>
     </div>
   `;
 
   feed.appendChild(div);
+
+  // Stash this round's elements on the buffer so chunk handlers target the
+  // correct (current) message rather than a stale one from a previous round.
+  const buf = state.streamBufs[id];
+  if (buf) {
+    buf.roomThinkEl = div.querySelector('.msg-thinking');
+    buf.roomTextEl = div.querySelector('.msg-text');
+  }
+
   scrollRoomToBottom();
 }
 
@@ -339,13 +344,6 @@ function buildPanels() {
         <button class="panel-ask-btn" onclick="App.setDirectTarget('${id}')">
           [Ask ${thinker.name.split(' ')[0]} directly →]
         </button>
-      </div>
-
-      <div class="panel-thinking-section">
-        <div class="panel-thinking-label">[Internal Reasoning]</div>
-        <div class="panel-thinking-text" id="panel-thinking-${id}">
-          <span style="color:var(--ink-faint)">Awaiting the debate…</span>
-        </div>
       </div>
 
       <div class="panel-responses" id="panel-responses-${id}">
@@ -520,16 +518,16 @@ function escHtml(str) {
 
 /* ── Fallback roster (used if backend unreachable) ────────────────────────── */
 const FALLBACK_THINKERS = [
-  { id: 'turing',     name: 'Alan Turing',     domain: 'Technology & AI',       era: '20th Century',       color: '#2a5f8a', initials: 'AT' },
-  { id: 'einstein',   name: 'Albert Einstein', domain: 'Science & Physics',     era: '20th Century',       color: '#7a5820', initials: 'AE' },
-  { id: 'musk',       name: 'Elon Musk',       domain: 'Tech Entrepreneurship', era: '21st Century',       color: '#1a5a5a', initials: 'EM' },
-  { id: 'modi',       name: 'Narendra Modi',   domain: 'Politics & Governance', era: '21st Century',       color: '#6a3a10', initials: 'NM' },
-  { id: 'cleopatra',  name: 'Cleopatra',       domain: 'Leadership & Power',    era: 'Ancient World',      color: '#6a5010', initials: 'CL' },
-  { id: 'suntzu',     name: 'Sun Tzu',         domain: 'Strategy & Warfare',    era: 'Ancient World',      color: '#1a5a3a', initials: 'ST' },
-  { id: 'tesla',      name: 'Nikola Tesla',    domain: 'Invention & Vision',    era: '19th–20th Century',  color: '#3a2a6a', initials: 'NT' },
-  { id: 'trump',      name: 'Donald Trump',    domain: 'Business & Politics',   era: '21st Century',       color: '#6a1a1a', initials: 'DT' },
-  { id: 'buffett',    name: 'Warren Buffett',  domain: 'Finance & Investing',   era: '20th–21st Century',  color: '#1a4a1a', initials: 'WB' },
-  { id: 'olearyd',    name: "Kevin O'Leary",   domain: 'Venture & Investing',   era: '21st Century',       color: '#5a3a10', initials: 'KO' },
+  { id: 'modi',       name: 'Narendra Modi',      domain: 'Politics & Governance',  era: '21st Century',       color: '#8a5a30', initials: 'NM' },
+  { id: 'einstein',   name: 'Albert Einstein',    domain: 'Science & Physics',      era: '20th Century',       color: '#a87d4a', initials: 'AE' },
+  { id: 'musk',       name: 'Elon Musk',          domain: 'Tech Entrepreneurship',  era: '21st Century',       color: '#4a8a8a', initials: 'EM' },
+  { id: 'kalam',      name: 'A.P.J. Abdul Kalam', domain: 'Science & Leadership',   era: '20th–21st Century',  color: '#5a8ab0', initials: 'AK' },
+  { id: 'cleopatra',  name: 'Cleopatra',          domain: 'Leadership & Power',     era: 'Ancient World',      color: '#8a7a30', initials: 'CL' },
+  { id: 'mobama',     name: 'Michelle Obama',     domain: 'Leadership & Advocacy',  era: '21st Century',       color: '#7a4a6a', initials: 'MO' },
+  { id: 'tesla',      name: 'Nikola Tesla',       domain: 'Invention & Vision',     era: '19th–20th Century',  color: '#5a4a8a', initials: 'NT' },
+  { id: 'trump',      name: 'Donald Trump',       domain: 'Business & Politics',    era: '21st Century',       color: '#8a3a3a', initials: 'DT' },
+  { id: 'buffett',    name: 'Warren Buffett',     domain: 'Finance & Investing',    era: '20th–21st Century',  color: '#3a6a3a', initials: 'WB' },
+  { id: 'curie',      name: 'Marie Curie',        domain: 'Science & Discovery',    era: '19th–20th Century',  color: '#3a8a7a', initials: 'MC' },
 ];
 
 /* ── Boot ─────────────────────────────────────────────────────────────────── */
