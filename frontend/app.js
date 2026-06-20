@@ -208,7 +208,7 @@ function onThinkerStart(id) {
   const responsesEl = document.getElementById(`panel-responses-${id}`);
   if (responsesEl && state.streamBufs[id]) {
     const liveEl = document.createElement('div');
-    liveEl.className = 'panel-response-text stream-cursor';
+    liveEl.className = 'panel-response-text';
     responsesEl.appendChild(liveEl);
     state.streamBufs[id].panelLiveEl = liveEl;
     responsesEl.scrollTop = responsesEl.scrollHeight;
@@ -252,7 +252,6 @@ function onThinkerEnd(id) {
 
   // Remove streaming cursors
   document.getElementById(`panel-thinking-${id}`)?.classList.remove('stream-cursor');
-  buf.panelLiveEl?.classList.remove('stream-cursor');
   buf.roomTextEl?.classList.remove('stream-cursor');
 
   // Remove speaking state from dining table seat
