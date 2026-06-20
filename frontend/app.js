@@ -399,18 +399,18 @@ function buildDiningTable() {
 
   const n = state.selected.length;
 
-  // Seat = portrait(92px) + gap(12px) + speech(210px) = 314px wide.
-  // Table is 360px wide (±180px from center). Use 215px so seats clear the table.
+  // Seat = portrait(124px) + gap(14px) + speech(280px) = 418px wide.
+  // Table is 480px wide (±240px from center). Use 255px so seats clear the table.
   // Left seats: anchor RIGHT edge; right seats: anchor LEFT edge.
   const CSS_POS = {
     2: [
-      { right: 'calc(50% + 215px)', top: '50%',              transform: 'translateY(-50%)' },
-      { left:  'calc(50% + 215px)', top: '50%',              transform: 'translateY(-50%)' },
+      { right: 'calc(50% + 255px)', top: '50%',               transform: 'translateY(-50%)' },
+      { left:  'calc(50% + 255px)', top: '50%',               transform: 'translateY(-50%)' },
     ],
     3: [
-      { right: 'calc(50% + 215px)', top: 'calc(50% - 85px)', transform: '' },
-      { left:  'calc(50% + 215px)', top: 'calc(50% - 85px)', transform: '' },
-      { left:  '50%',               top: 'calc(50% + 95px)', transform: 'translateX(-50%)' },
+      { right: 'calc(50% + 255px)', top: 'calc(50% - 100px)', transform: '' },
+      { left:  'calc(50% + 255px)', top: 'calc(50% - 100px)', transform: '' },
+      { left:  '50%',               top: 'calc(50% + 115px)', transform: 'translateX(-50%)' },
     ],
   };
   const positions = CSS_POS[n] || CSS_POS[2];
