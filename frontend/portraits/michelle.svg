@@ -1,0 +1,72 @@
+<svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <rect width="280" height="340" fill="#f0ebe0"/>
+
+  <!-- Elegant dress / blazer (burgundy) -->
+  <path d="M 0,340 L 0,268 C 55,248 98,240 140,238 C 182,240 225,248 280,268 L 280,340 Z" fill="#4a1030"/>
+  <!-- Blazer lapels -->
+  <path d="M 118,238 L 108,260 L 128,272 L 140,258 Z" fill="#5a1838" stroke="#3a0820" stroke-width="0.5"/>
+  <path d="M 162,238 L 172,260 L 152,272 L 140,258 Z" fill="#5a1838" stroke="#3a0820" stroke-width="0.5"/>
+  <!-- Neckline pearl strand -->
+  <path d="M 116,250 C 124,260 132,264 140,265 C 148,264 156,260 164,250" stroke="#e8dcc8" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Neck -->
+  <path d="M 127,220 L 125,242 Q 140,248 155,242 L 153,220 Q 145,225 135,220 Z" fill="#8a5030"/>
+
+  <!-- Pearl earrings -->
+  <circle cx="82" cy="180" r="6" fill="#e8dcc8" stroke="#d0c0a8" stroke-width="0.5"/>
+  <circle cx="82" cy="193" r="5" fill="#e8dcc8" stroke="#d0c0a8" stroke-width="0.5"/>
+  <circle cx="198" cy="180" r="6" fill="#e8dcc8" stroke="#d0c0a8" stroke-width="0.5"/>
+  <circle cx="198" cy="193" r="5" fill="#e8dcc8" stroke="#d0c0a8" stroke-width="0.5"/>
+
+  <!-- Face oval (warm, strong) -->
+  <ellipse cx="140" cy="158" rx="70" ry="82" fill="#8a5030"/>
+  <ellipse cx="128" cy="138" rx="20" ry="26" fill="#9a6040" opacity="0.4"/>
+
+  <!-- Natural shoulder-length hair -->
+  <!-- Left side volume -->
+  <path d="M 72,140 C 68,110 74,80 88,60 C 96,48 108,40 120,38 C 110,52 104,72 102,96 C 100,116 102,138 104,158 C 96,148 80,152 72,140 Z" fill="#1a150f"/>
+  <!-- Right side volume -->
+  <path d="M 208,140 C 212,110 206,80 192,60 C 184,48 172,40 160,38 C 170,52 176,72 178,96 C 180,116 178,138 176,158 C 184,148 200,152 208,140 Z" fill="#1a150f"/>
+  <!-- Top and sides of hair -->
+  <path d="M 88,62 C 90,40 100,20 116,10 C 128,2 152,2 164,10 C 180,20 190,40 192,62 C 186,50 176,40 164,36 C 152,30 128,30 116,36 C 104,40 94,50 88,62 Z" fill="#1a150f"/>
+  <!-- Hair falling behind ears -->
+  <path d="M 72,142 C 70,162 70,186 76,206 C 80,218 88,226 94,228" stroke="#1a150f" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <path d="M 208,142 C 210,162 210,186 204,206 C 200,218 192,226 186,228" stroke="#1a150f" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <!-- Hair waves/texture -->
+  <path d="M 80,148 C 84,138 86,128 84,118" stroke="#2a2018" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 200,148 C 196,138 194,128 196,118" stroke="#2a2018" stroke-width="2" fill="none" opacity="0.4"/>
+  <!-- Natural wave on side -->
+  <path d="M 76,162 C 80,152 82,160 78,170" stroke="#2a2018" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 204,162 C 200,152 198,160 202,170" stroke="#2a2018" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <!-- Eyebrows (defined, arched) -->
+  <path d="M 108,136 C 114,130 122,128 130,130" stroke="#1a100a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M 150,130 C 158,128 166,130 172,136" stroke="#1a100a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyes (warm, expressive) -->
+  <ellipse cx="122" cy="148" rx="12" ry="10" fill="white"/>
+  <circle cx="122" cy="148" r="6" fill="#1a150f"/>
+  <circle cx="124" cy="146" r="2" fill="white"/>
+  <ellipse cx="158" cy="148" rx="12" ry="10" fill="white"/>
+  <circle cx="158" cy="148" r="6" fill="#1a150f"/>
+  <circle cx="160" cy="146" r="2" fill="white"/>
+  <!-- Subtle eyeliner -->
+  <path d="M 110,148 C 114,144 120,143 126,144" stroke="#1a100a" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M 170,148 C 166,144 160,143 154,144" stroke="#1a100a" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- Nose (refined) -->
+  <path d="M 140,156 C 136,166 133,178 136,184 Q 140,186 144,184 C 147,178 144,166 140,156 Z" fill="#7a4020" opacity="0.4"/>
+
+  <!-- Warm wide smile -->
+  <path d="M 118,196 Q 140,212 162,196" stroke="#6a3018" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M 116,196 Q 114,202 118,206" stroke="#6a3018" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <path d="M 164,196 Q 166,202 162,206" stroke="#6a3018" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <!-- Teeth hint -->
+  <path d="M 118,200 Q 140,212 162,200" fill="white" stroke="none" opacity="0.6"/>
+
+  <!-- Cheekbone definition -->
+  <path d="M 96,172 C 102,168 110,170 112,176" stroke="#6a3018" stroke-width="0.8" fill="none" opacity="0.3"/>
+  <path d="M 184,172 C 178,168 170,170 168,176" stroke="#6a3018" stroke-width="0.8" fill="none" opacity="0.3"/>
+
+  <text x="140" y="328" font-family="monospace" font-size="9" fill="#5a1a3a" opacity="0.6" text-anchor="middle" letter-spacing="3">MICHELLE OBAMA</text>
+</svg>

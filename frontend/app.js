@@ -75,6 +75,17 @@ const App = {
     document.querySelectorAll('.thinker-chip').forEach(c => c.classList.remove('active-target'));
   },
 
+  replyToWord(id, word) {
+    App.setDirectTarget(id);
+    const input = document.getElementById('debate-input');
+    if (input && !input.value.trim()) {
+      input.value = `Regarding "${word}" — `;
+      App.autoResize(input);
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+  },
+
   async sendQuestion() {
     if (state.isStreaming) return;
     const input = document.getElementById('debate-input');
@@ -187,10 +198,11 @@ function handleEvent(ev) {
 /* ── Stream event handlers ────────────────────────────────────────────────── */
 function onThinkerStart(id) {
   const thinker = getThinker(id);
-  // Highlight seat
-  document.getElementById(`seat-${id}`)?.classList.add('speaking');
-  // Create room message placeholder
-  createRoomMessagePlaceholder(id, thinker);
+  // Highlight dining table seat
+  document.getElementById(`table-seat-${id}`)?.classList.add('speaking');
+  // Create room message placeholder, capture its ID
+  const msgId = createRoomMessagePlaceholder(id, thinker);
+  if (state.streamBufs[id]) state.streamBufs[id].msgId = msgId;
   // Reset panel thinking
   const pt = document.getElementById(`panel-thinking-${id}`);
   if (pt) pt.textContent = '';
@@ -237,12 +249,15 @@ function onThinkerEnd(id) {
   document.getElementById(`panel-response-current-${id}`)?.classList.remove('stream-cursor');
   document.getElementById(`room-msg-text-${id}`)?.classList.remove('stream-cursor');
 
-  // Remove speaking state
-  document.getElementById(`seat-${id}`)?.classList.remove('speaking');
+  // Remove speaking state from dining table seat
+  document.getElementById(`table-seat-${id}`)?.classList.remove('speaking');
 
   // Save to conversation history
   if (!state.conversations[id]) state.conversations[id] = [];
   state.conversations[id].push({ role: 'assistant', content: buf.response });
+
+  // Make completed message text interactive
+  if (buf.msgId) makeTextInteractive(id, buf.msgId);
 
   // Finalise panel: archive current response into history block
   archivePanelResponse(id, buf);
@@ -257,8 +272,6 @@ function createRoomMessagePlaceholder(id, thinker) {
   div.className = 'room-msg';
   div.id = msgId;
 
-  const hasThinking = true; // we optimistically show think toggle
-
   div.innerHTML = `
     <div class="msg-avatar" style="background:${thinker.color}">
       ${thinker.image
@@ -270,6 +283,7 @@ function createRoomMessagePlaceholder(id, thinker) {
         <span class="msg-name" style="color:${thinker.color}">${thinker.name}</span>
         <span class="msg-model-tag">${thinker.model ? thinker.model.split('/').pop() : ''}</span>
         <button class="msg-think-toggle" onclick="toggleThinking('${msgId}')">[show thinking]</button>
+        <button class="msg-reply-btn" onclick="App.setDirectTarget('${id}')" title="Direct a follow-up to ${thinker.name}">[↩ reply]</button>
       </div>
       <div class="msg-thinking" id="room-thinking-${id}"></div>
       <div class="msg-text stream-cursor" id="room-msg-text-${id}"
@@ -279,6 +293,7 @@ function createRoomMessagePlaceholder(id, thinker) {
 
   feed.appendChild(div);
   scrollRoomToBottom();
+  return msgId;
 }
 
 function appendRoomUserMessage(text) {
@@ -378,6 +393,80 @@ function archivePanelResponse(id, buf) {
   responsesEl.insertBefore(block, responsesEl.firstChild);
 }
 
+/* ── Dining table builder ────────────────────────────────────────────────── */
+function buildDiningTable() {
+  const scene = document.getElementById('room-table-scene');
+  const table = document.getElementById('dining-table');
+  if (!scene || !table) return;
+
+  // Remove previous seats (not the table itself)
+  scene.querySelectorAll('.table-seat').forEach(el => el.remove());
+
+  // Add candles to table
+  table.querySelectorAll('.table-candle').forEach(el => el.remove());
+  [{ left: '28%' }, { left: '72%' }].forEach(pos => {
+    const candle = document.createElement('div');
+    candle.className = 'table-candle';
+    candle.style.cssText = `position:absolute;left:${pos.left};top:0;transform:translateX(-50%) translateY(-100%);`;
+    candle.innerHTML = `<div class="table-candle-flame"></div><div class="table-candle-body"></div>`;
+    table.appendChild(candle);
+  });
+
+  // Seat positions relative to scene center (scene is 210px tall, table centered)
+  const POSITIONS = {
+    2: [{ x: -170, y: 0 }, { x: 170, y: 0 }],
+    3: [{ x: -170, y: -24 }, { x: 170, y: -24 }, { x: 0, y: 82 }],
+  };
+  const n = state.selected.length;
+  const positions = POSITIONS[n] || POSITIONS[2];
+  // Scene vertical center: 105px from top
+  const sceneMidY = 105;
+
+  state.selected.forEach((id, i) => {
+    const t = getThinker(id);
+    const pos = positions[i] || positions[0];
+    const seat = document.createElement('div');
+    seat.className = 'table-seat';
+    seat.id = `table-seat-${id}`;
+    seat.title = `Direct a question to ${t.name}`;
+    seat.onclick = () => App.setDirectTarget(id);
+    // Portrait is 64×77, name ~20px → total ~97px; anchor at portrait top-center
+    seat.style.cssText = `position:absolute;left:calc(50% + ${pos.x - 32}px);top:${sceneMidY + pos.y - 48}px;`;
+    seat.innerHTML = `
+      <div class="table-seat-portrait" style="border-color:${t.color}40">
+        ${t.image
+          ? `<img src="${t.image}" alt="${t.name}">`
+          : `<div class="table-seat-initials" style="color:${t.color}">${t.initials}</div>`}
+      </div>
+      <div class="table-seat-name">${t.name.split(' ')[0]}</div>
+    `;
+    scene.appendChild(seat);
+  });
+}
+
+/* ── Interactive text ────────────────────────────────────────────────────── */
+function makeTextInteractive(id, msgId) {
+  const msgEl = document.getElementById(msgId);
+  if (!msgEl) return;
+  const textEl = msgEl.querySelector(`#room-msg-text-${id}`);
+  if (!textEl || !textEl.textContent.trim()) return;
+
+  const rawText = textEl.textContent;
+  // Wrap each whitespace-separated token in a clickable span
+  const html = rawText.split(/(\s+)/).map(token => {
+    if (/^\s+$/.test(token)) return token.replace(/\n/g, '<br>');
+    const safe = token.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const esc  = token.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<span class="word-token" onclick="App.replyToWord('${id}','${esc}')" title="Click to ask about this">${safe}</span>`;
+  }).join('');
+
+  textEl.innerHTML = html;
+
+  // Show the reply button
+  const replyBtn = msgEl.querySelector('.msg-reply-btn');
+  if (replyBtn) replyBtn.classList.add('visible');
+}
+
 /* ── Build debate UI ─────────────────────────────────────────────────────── */
 function buildDebateUI() {
   // Header chips
@@ -397,24 +486,8 @@ function buildDebateUI() {
     bar.appendChild(chip);
   });
 
-  // Room seats
-  const seats = document.getElementById('room-seats');
-  seats.innerHTML = '';
-  state.selected.forEach(id => {
-    const t = getThinker(id);
-    const seat = document.createElement('div');
-    seat.className = 'room-seat';
-    seat.id = `seat-${id}`;
-    seat.title = `Direct a question to ${t.name}`;
-    seat.onclick = () => App.setDirectTarget(id);
-    seat.innerHTML = `
-      <div class="room-seat-avatar" style="border-color:${t.color}40">
-        ${t.image ? `<img src="${t.image}" alt="${t.name}">` : `<span style="color:${t.color}">${t.initials}</span>`}
-      </div>
-      <div class="room-seat-name">${t.name.split(' ')[0]}</div>
-    `;
-    seats.appendChild(seat);
-  });
+  // Dining table seats
+  buildDiningTable();
 
   // Clear room feed (keep empty state)
   const feed = document.getElementById('room-feed');
@@ -442,18 +515,20 @@ function renderSelectGrid() {
     card.onclick = () => toggleSelect(t.id);
 
     card.innerHTML = `
-      <div class="card-num-row">
-        <span class="card-num" id="cardnum-${t.id}">${String(i + 1).padStart(2, '0')}.</span>
-        <div class="card-badge" id="badge-${t.id}"></div>
-      </div>
-      <div class="card-portrait" id="portrait-${t.id}">
+      <div class="card-portrait-full">
         ${t.image
           ? `<img src="${t.image}" alt="${t.name}" />`
-          : `<span style="color:${t.color}">${t.initials}</span>`}
+          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:48px;color:${t.color};background:var(--bg-alt)">${t.initials}</div>`}
+        <div class="card-overlay">
+          <span class="card-num" id="cardnum-${t.id}">${String(i + 1).padStart(2, '0')}.</span>
+          <div class="card-badge" id="badge-${t.id}"></div>
+        </div>
       </div>
-      <div class="card-name">${t.name}</div>
-      <div class="card-domain">${t.domain}</div>
-      <div class="card-era">${t.era}</div>
+      <div class="card-info">
+        <div class="card-name">${t.name}</div>
+        <div class="card-domain">${t.domain}</div>
+        <div class="card-era">${t.era}</div>
+      </div>
     `;
 
     grid.appendChild(card);
@@ -520,16 +595,16 @@ function escHtml(str) {
 
 /* ── Fallback roster (used if backend unreachable) ────────────────────────── */
 const FALLBACK_THINKERS = [
-  { id: 'turing',     name: 'Alan Turing',     domain: 'Technology & AI',       era: '20th Century',       color: '#2a5f8a', initials: 'AT' },
-  { id: 'einstein',   name: 'Albert Einstein', domain: 'Science & Physics',     era: '20th Century',       color: '#7a5820', initials: 'AE' },
-  { id: 'musk',       name: 'Elon Musk',       domain: 'Tech Entrepreneurship', era: '21st Century',       color: '#1a5a5a', initials: 'EM' },
-  { id: 'modi',       name: 'Narendra Modi',   domain: 'Politics & Governance', era: '21st Century',       color: '#6a3a10', initials: 'NM' },
-  { id: 'cleopatra',  name: 'Cleopatra',       domain: 'Leadership & Power',    era: 'Ancient World',      color: '#6a5010', initials: 'CL' },
-  { id: 'suntzu',     name: 'Sun Tzu',         domain: 'Strategy & Warfare',    era: 'Ancient World',      color: '#1a5a3a', initials: 'ST' },
-  { id: 'tesla',      name: 'Nikola Tesla',    domain: 'Invention & Vision',    era: '19th–20th Century',  color: '#3a2a6a', initials: 'NT' },
-  { id: 'trump',      name: 'Donald Trump',    domain: 'Business & Politics',   era: '21st Century',       color: '#6a1a1a', initials: 'DT' },
-  { id: 'buffett',    name: 'Warren Buffett',  domain: 'Finance & Investing',   era: '20th–21st Century',  color: '#1a4a1a', initials: 'WB' },
-  { id: 'olearyd',    name: "Kevin O'Leary",   domain: 'Venture & Investing',   era: '21st Century',       color: '#5a3a10', initials: 'KO' },
+  { id: 'modi',      name: 'Narendra Modi',   domain: 'Politics & Governance', era: '21st Century',      color: '#6a3a10', initials: 'NM', image: '/static/portraits/modi.svg' },
+  { id: 'einstein',  name: 'Albert Einstein', domain: 'Science & Physics',     era: '20th Century',      color: '#7a5820', initials: 'AE', image: '/static/portraits/einstein.svg' },
+  { id: 'musk',      name: 'Elon Musk',       domain: 'Tech Entrepreneurship', era: '21st Century',      color: '#1a5a5a', initials: 'EM', image: '/static/portraits/musk.svg' },
+  { id: 'kalam',     name: 'APJ Abdul Kalam', domain: 'Science & Leadership',  era: '20th–21st Century', color: '#1a3a6a', initials: 'AK', image: '/static/portraits/kalam.svg' },
+  { id: 'cleopatra', name: 'Cleopatra',       domain: 'Leadership & Power',    era: 'Ancient World',     color: '#6a5010', initials: 'CL', image: '/static/portraits/cleopatra.svg' },
+  { id: 'michelle',  name: 'Michelle Obama',  domain: 'Leadership & Advocacy', era: '21st Century',      color: '#5a1a3a', initials: 'MO', image: '/static/portraits/michelle.svg' },
+  { id: 'tesla',     name: 'Nikola Tesla',    domain: 'Invention & Vision',    era: '19th–20th Century', color: '#3a2a6a', initials: 'NT', image: '/static/portraits/tesla.svg' },
+  { id: 'trump',     name: 'Donald Trump',    domain: 'Business & Politics',   era: '21st Century',      color: '#6a1a1a', initials: 'DT', image: '/static/portraits/trump.svg' },
+  { id: 'buffett',   name: 'Warren Buffett',  domain: 'Finance & Investing',   era: '20th–21st Century', color: '#1a4a1a', initials: 'WB', image: '/static/portraits/buffett.svg' },
+  { id: 'curie',     name: 'Marie Curie',     domain: 'Science & Discovery',   era: '19th–20th Century', color: '#0a4040', initials: 'MC', image: '/static/portraits/curie.svg' },
 ];
 
 /* ── Boot ─────────────────────────────────────────────────────────────────── */

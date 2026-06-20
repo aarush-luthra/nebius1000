@@ -1,0 +1,83 @@
+<svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <rect width="280" height="340" fill="#f0ebe0"/>
+
+  <!-- Grey suit -->
+  <path d="M 0,340 L 0,268 C 55,248 98,240 140,238 C 182,240 225,248 280,268 L 280,340 Z" fill="#3a3e48"/>
+  <!-- Left lapel -->
+  <path d="M 118,238 L 106,262 L 128,272 L 140,258 Z" fill="#484e5a" stroke="#2a2e38" stroke-width="0.5"/>
+  <!-- Right lapel -->
+  <path d="M 162,238 L 174,262 L 152,272 L 140,258 Z" fill="#484e5a" stroke="#2a2e38" stroke-width="0.5"/>
+  <!-- White shirt -->
+  <path d="M 128,252 L 132,280 L 148,280 L 152,252 L 140,258 Z" fill="#e8e2d8"/>
+  <!-- Bow tie (burgundy/navy — classic Buffett) -->
+  <path d="M 128,248 L 136,254 L 140,252 L 144,254 L 152,248 L 144,244 L 140,246 L 136,244 Z" fill="#2a3050"/>
+  <!-- Bow tie knot -->
+  <ellipse cx="140" cy="250" rx="4" ry="3" fill="#222840"/>
+
+  <!-- Neck -->
+  <path d="M 127,220 L 125,242 Q 140,248 155,242 L 153,220 Q 145,225 135,220 Z" fill="#c89870"/>
+
+  <!-- Face (round, warm, grandfatherly) -->
+  <ellipse cx="140" cy="158" rx="74" ry="86" fill="#c89870"/>
+  <!-- Fuller cheeks -->
+  <ellipse cx="105" cy="178" rx="18" ry="14" fill="#d4a878" opacity="0.5"/>
+  <ellipse cx="175" cy="178" rx="18" ry="14" fill="#d4a878" opacity="0.5"/>
+
+  <!-- Thin white hair (sparse on sides, very little on top) -->
+  <!-- Left side sparse white -->
+  <path d="M 76,152 C 72,128 76,98 86,76 C 78,100 76,128 78,158 Z" fill="#c8c0b0"/>
+  <path d="M 80,120 C 78,106 82,88 90,72" stroke="#c0b8a8" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M 84,108 C 83,96 86,82 92,68" stroke="#d0c8b8" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <!-- Right side sparse white -->
+  <path d="M 204,152 C 208,128 204,98 194,76 C 202,100 204,128 202,158 Z" fill="#c8c0b0"/>
+  <path d="M 200,120 C 202,106 198,88 190,72" stroke="#c0b8a8" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M 196,108 C 197,96 194,82 188,68" stroke="#d0c8b8" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <!-- Very sparse top (mostly bald) -->
+  <path d="M 96,80 C 100,64 110,50 122,42 C 130,36 152,36 158,42 C 170,50 180,64 184,80 C 176,74 164,70 140,70 C 116,70 104,74 96,80 Z" fill="#c8c0b0" opacity="0.6"/>
+  <!-- Individual wispy strands -->
+  <path d="M 116,68 C 120,56 132,48 140,48 C 148,48 160,56 164,68" stroke="#d0c8b8" stroke-width="2" fill="none" opacity="0.5"/>
+
+  <!-- Round glasses (his classic look) -->
+  <circle cx="116" cy="150" r="22" fill="none" stroke="#4a3820" stroke-width="1.8"/>
+  <circle cx="164" cy="150" r="22" fill="none" stroke="#4a3820" stroke-width="1.8"/>
+  <!-- Lens tint -->
+  <circle cx="116" cy="150" r="22" fill="#e8f0e8" opacity="0.15"/>
+  <circle cx="164" cy="150" r="22" fill="#e8f0e8" opacity="0.15"/>
+  <!-- Bridge -->
+  <line x1="138" y1="150" x2="142" y2="150" stroke="#4a3820" stroke-width="1.5"/>
+  <!-- Temples -->
+  <line x1="94" y1="150" x2="78" y2="144" stroke="#4a3820" stroke-width="1.3"/>
+  <line x1="186" y1="150" x2="202" y2="144" stroke="#4a3820" stroke-width="1.3"/>
+
+  <!-- Eyebrows (light, thinning) -->
+  <path d="M 100,130 C 106,126 112,124 118,125" stroke="#9a9080" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <path d="M 150,125 C 156,124 162,126 168,130" stroke="#9a9080" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyes (kind, behind glasses) -->
+  <ellipse cx="116" cy="150" rx="11" ry="9" fill="white"/>
+  <circle cx="116" cy="150" r="5" fill="#3a3028"/>
+  <circle cx="118" cy="148" r="1.8" fill="white"/>
+  <ellipse cx="164" cy="150" rx="11" ry="9" fill="white"/>
+  <circle cx="164" cy="150" r="5" fill="#3a3028"/>
+  <circle cx="166" cy="148" r="1.8" fill="white"/>
+  <!-- Glasses glare -->
+  <path d="M 104,140 C 106,138 108,138 110,140" stroke="white" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M 152,140 C 154,138 156,138 158,140" stroke="white" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Nose (rounded, friendly) -->
+  <path d="M 140,162 C 136,172 133,184 135,190 Q 140,193 145,190 C 147,184 144,172 140,162 Z" fill="#b88060" opacity="0.4"/>
+
+  <!-- Warm knowing smile -->
+  <path d="M 120,206 Q 140,218 160,206" stroke="#a06030" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M 118,206 Q 116,213 120,216" stroke="#a06030" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <path d="M 162,206 Q 164,213 160,216" stroke="#a06030" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <!-- Slight smile lines -->
+  <path d="M 100,196 C 104,192 108,192 110,197" stroke="#a06030" stroke-width="1" fill="none" opacity="0.35"/>
+  <path d="M 180,196 C 176,192 172,192 170,197" stroke="#a06030" stroke-width="1" fill="none" opacity="0.35"/>
+
+  <!-- Age lines (character) -->
+  <path d="M 94,178 C 98,172 104,172 106,178" stroke="#b07040" stroke-width="0.7" fill="none" opacity="0.3"/>
+  <path d="M 186,178 C 182,172 176,172 174,178" stroke="#b07040" stroke-width="0.7" fill="none" opacity="0.3"/>
+
+  <text x="140" y="328" font-family="monospace" font-size="9" fill="#1a4a1a" opacity="0.6" text-anchor="middle" letter-spacing="3">WARREN BUFFETT</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <rect width="280" height="340" fill="#f0ebe0"/>
+
+  <!-- Dark turtleneck -->
+  <path d="M 0,340 L 0,265 C 55,244 98,236 140,234 C 182,236 225,244 280,265 L 280,340 Z" fill="#1a2025"/>
+  <!-- Turtleneck roll -->
+  <path d="M 118,234 L 114,250 L 120,258 L 140,262 L 160,258 L 166,250 L 162,234 Q 152,242 140,242 Q 128,242 118,234 Z" fill="#2a3035"/>
+
+  <!-- Neck -->
+  <path d="M 127,220 L 125,238 Q 140,244 155,238 L 153,220 Q 145,224 135,220 Z" fill="#d4a878"/>
+
+  <!-- Face oval (angular, strong jaw) -->
+  <ellipse cx="140" cy="152" rx="70" ry="84" fill="#d4a878"/>
+  <!-- Angular jaw lines (slightly sharper) -->
+  <path d="M 84,180 C 82,210 90,238 108,254 C 120,264 132,268 140,268 C 148,268 160,264 172,254 C 190,238 198,210 196,180" fill="#d4a878" stroke="none"/>
+
+  <!-- Short dark hair — slight widow's peak -->
+  <path d="M 82,134 C 80,106 88,82 104,66 C 116,52 128,46 140,46 C 152,46 166,52 178,66 C 194,84 202,110 200,138 C 196,128 190,116 180,106 C 170,96 158,90 148,90 C 140,88 134,88 130,90 C 120,90 110,96 102,106 C 94,116 88,130 82,142 Z" fill="#1a150f"/>
+  <!-- Widow's peak center -->
+  <path d="M 132,88 C 136,82 140,80 144,82 C 148,84 150,88 148,90 C 144,86 136,86 132,88 Z" fill="#1a150f"/>
+  <!-- Hair texture -->
+  <path d="M 86,112 C 94,96 106,82 120,72" stroke="#2a2018" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M 192,112 C 186,94 176,80 162,70" stroke="#2a2018" stroke-width="1" fill="none" opacity="0.4"/>
+
+  <!-- Eyebrows (strong, dark) -->
+  <path d="M 108,132 C 114,128 122,126 130,127" stroke="#1a150f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M 150,127 C 158,126 166,128 172,132" stroke="#1a150f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyes (slightly intense) -->
+  <ellipse cx="122" cy="144" rx="12" ry="10" fill="white"/>
+  <circle cx="122" cy="144" r="6" fill="#2a2830"/>
+  <circle cx="124" cy="142" r="2" fill="white"/>
+  <ellipse cx="158" cy="144" rx="12" ry="10" fill="white"/>
+  <circle cx="158" cy="144" r="6" fill="#2a2830"/>
+  <circle cx="160" cy="142" r="2" fill="white"/>
+
+  <!-- Nose (straight, prominent) -->
+  <path d="M 140,154 L 134,174 Q 132,180 135,183 Q 140,185 145,183 Q 148,180 146,174 Z" fill="#c49060" opacity="0.5"/>
+  <!-- Nose bridge -->
+  <line x1="140" y1="132" x2="140" y2="155" stroke="#c49060" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Mouth (slight smirk, asymmetric) -->
+  <path d="M 124,200 Q 138,207 156,202" stroke="#a87040" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <!-- Slight smile line right side -->
+  <path d="M 154,202 Q 158,204 158,208" stroke="#a87040" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Jaw highlight -->
+  <path d="M 98,230 C 110,248 126,260 140,262 C 154,260 170,248 182,230" stroke="#c49060" stroke-width="0.5" fill="none" opacity="0.3"/>
+
+  <text x="140" y="328" font-family="monospace" font-size="9" fill="#1a5a5a" opacity="0.6" text-anchor="middle" letter-spacing="3">ELON MUSK</text>
+</svg>
