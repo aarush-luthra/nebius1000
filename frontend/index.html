@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dead Thinkers Dialogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── VIEW: LANDING ──────────────────────────────────────────────────────── -->
+  <div id="view-landing" class="view active">
+    <header class="land-header">
+      <span class="land-wordmark">Dead Thinkers Dialogue</span>
+      <span class="land-powered">Powered by Nebius AI</span>
+    </header>
+
+    <!-- Left illustration: The Roman Senate — orator addressing the chamber -->
+    <svg class="land-illo land-illo-left" viewBox="0 0 260 500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pediment triangle -->
+      <path d="M 12,46 L 130,10 L 248,46" stroke-width="0.8" opacity="0.7"/>
+      <!-- Entablature -->
+      <line x1="10" y1="46" x2="250" y2="46" stroke-width="1.1"/>
+      <line x1="16" y1="54" x2="244" y2="54" stroke-width="0.7"/>
+      <!-- Column left -->
+      <line x1="42" y1="54" x2="42" y2="378" stroke-width="1.4"/>
+      <line x1="36" y1="58" x2="36" y2="376" stroke-width="0.45" opacity="0.6"/>
+      <line x1="48" y1="58" x2="48" y2="376" stroke-width="0.45" opacity="0.6"/>
+      <path d="M 24,54 Q 42,42 60,54" stroke-width="1.1"/>
+      <line x1="20" y1="54" x2="64" y2="54" stroke-width="1.2"/>
+      <line x1="26" y1="378" x2="58" y2="378" stroke-width="1.1"/>
+      <line x1="22" y1="384" x2="62" y2="384" stroke-width="0.9"/>
+      <!-- Column right -->
+      <line x1="218" y1="54" x2="218" y2="378" stroke-width="1.4"/>
+      <line x1="212" y1="58" x2="212" y2="376" stroke-width="0.45" opacity="0.6"/>
+      <line x1="224" y1="58" x2="224" y2="376" stroke-width="0.45" opacity="0.6"/>
+      <path d="M 200,54 Q 218,42 236,54" stroke-width="1.1"/>
+      <line x1="196" y1="54" x2="240" y2="54" stroke-width="1.2"/>
+      <line x1="202" y1="378" x2="234" y2="378" stroke-width="1.1"/>
+      <line x1="198" y1="384" x2="238" y2="384" stroke-width="0.9"/>
+      <!-- Steps -->
+      <line x1="20" y1="386" x2="240" y2="386" stroke-width="1.1"/>
+      <line x1="14" y1="394" x2="246" y2="394" stroke-width="1.1"/>
+      <line x1="8"  y1="402" x2="252" y2="402" stroke-width="0.9"/>
+
+      <!-- FIGURE 1: Orator, center, standing, right arm raised -->
+      <circle cx="130" cy="106" r="14" stroke-width="1.3"/>
+      <!-- toga body -->
+      <path d="M 112,126 C 104,170 98,228 100,298 C 101,335 108,364 118,374 C 124,380 136,382 146,376 C 156,368 162,340 160,296 C 158,230 152,174 144,128" stroke-width="1.3"/>
+      <!-- toga chest drape -->
+      <path d="M 112,132 C 122,142 138,140 146,132" stroke-width="1"/>
+      <path d="M 108,166 C 120,160 138,163 154,158" stroke-width="0.75" opacity="0.85"/>
+      <path d="M 104,208 C 118,202 140,205 158,200" stroke-width="0.7" opacity="0.75"/>
+      <path d="M 101,254 C 115,249 140,252 160,248" stroke-width="0.65" opacity="0.65"/>
+      <!-- right arm raised, orating -->
+      <path d="M 144,136 C 156,124 168,106 174,88 C 178,76 176,66 170,62" stroke-width="1.3"/>
+      <path d="M 168,58 C 172,52 178,50 180,55" stroke-width="0.9"/>
+      <path d="M 170,60 C 174,53 180,52 181,57" stroke-width="0.8"/>
+      <!-- left arm slight gesture -->
+      <path d="M 113,138 C 100,146 88,150 82,155" stroke-width="1.1"/>
+
+      <!-- FIGURE 2: Right side — standing listener, head tilted toward orator -->
+      <circle cx="196" cy="152" r="12" stroke-width="1.2"/>
+      <path d="M 184,167 C 176,204 172,254 174,322 C 175,348 182,368 194,374 C 204,378 214,372 216,356 C 220,332 216,274 210,224 C 206,190 202,170 206,164" stroke-width="1.2"/>
+      <path d="M 184,173 C 194,178 206,174 210,166" stroke-width="0.85"/>
+      <path d="M 178,205 C 190,200 206,202 218,198" stroke-width="0.7" opacity="0.8"/>
+      <path d="M 174,246 C 188,242 206,244 220,240" stroke-width="0.65" opacity="0.7"/>
+      <!-- arm reaching toward orator -->
+      <path d="M 184,174 C 174,166 162,158 154,155" stroke-width="1.1"/>
+
+      <!-- FIGURE 3: Left side — seated elder on steps -->
+      <circle cx="64" cy="254" r="11" stroke-width="1.1"/>
+      <!-- seated body -->
+      <path d="M 52,268 C 46,286 44,312 48,342 C 50,356 57,364 68,364 C 79,364 84,356 84,342 C 86,320 82,296 76,274 C 72,260 66,256 72,256" stroke-width="1.2"/>
+      <!-- seated legs -->
+      <path d="M 48,344 C 42,358 40,372 47,382 C 51,388 58,390 66,386" stroke-width="1.1"/>
+      <path d="M 84,342 C 88,356 90,368 86,378" stroke-width="1.1"/>
+      <!-- toga folds -->
+      <path d="M 52,275 C 62,280 72,276 77,268" stroke-width="0.9"/>
+      <path d="M 46,304 C 58,299 72,301 82,297" stroke-width="0.7" opacity="0.8"/>
+      <path d="M 45,330 C 57,325 72,327 82,323" stroke-width="0.65" opacity="0.7"/>
+      <!-- hand raised gesturing -->
+      <path d="M 72,262 C 82,254 93,250 102,253" stroke-width="1.1"/>
+    </svg>
+
+    <!-- Right illustration: The Parlour — intimate philosophical exchange -->
+    <svg class="land-illo land-illo-right" viewBox="0 0 260 500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <!-- Arch background -->
+      <path d="M 30,420 L 30,180 Q 30,80 130,60 Q 230,80 230,180 L 230,420" stroke-width="1.1"/>
+      <!-- Inner arch -->
+      <path d="M 55,420 L 55,192 Q 55,108 130,90 Q 205,108 205,192 L 205,420" stroke-width="0.7" opacity="0.6"/>
+      <!-- Keystone at top -->
+      <path d="M 118,62 L 130,48 L 142,62" stroke-width="1" opacity="0.8"/>
+
+      <!-- Steps at base -->
+      <line x1="12"  y1="422" x2="248" y2="422" stroke-width="1.1"/>
+      <line x1="6"   y1="430" x2="254" y2="430" stroke-width="1"/>
+      <line x1="1"   y1="438" x2="259" y2="438" stroke-width="0.8"/>
+
+      <!-- Pillar/lectern between figures -->
+      <rect x="118" y="290" width="24" height="80" stroke-width="1" rx="0"/>
+      <line x1="112" y1="290" x2="148" y2="290" stroke-width="1.1"/>
+      <!-- Scroll on lectern -->
+      <path d="M 121,282 C 118,278 118,272 122,270 C 126,268 132,268 136,270 C 140,272 140,278 137,282" stroke-width="0.9"/>
+      <line x1="122" y1="276" x2="138" y2="276" stroke-width="0.6" opacity="0.7"/>
+      <line x1="122" y1="279" x2="138" y2="279" stroke-width="0.6" opacity="0.5"/>
+
+      <!-- FIGURE LEFT: Philosopher, standing, gesturing at scroll -->
+      <circle cx="76" cy="148" r="13" stroke-width="1.3"/>
+      <path d="M 64,164 C 56,200 52,254 54,322 C 55,352 62,372 74,378 C 82,382 92,380 98,370 C 106,354 108,316 104,266 C 100,222 94,178 96,166" stroke-width="1.3"/>
+      <!-- toga drapes -->
+      <path d="M 64,170 C 74,178 88,174 96,166" stroke-width="1"/>
+      <path d="M 58,205 C 70,200 86,202 100,197" stroke-width="0.75" opacity="0.85"/>
+      <path d="M 54,248 C 68,243 86,246 104,241" stroke-width="0.7" opacity="0.75"/>
+      <path d="M 54,292 C 68,287 86,290 104,286" stroke-width="0.65" opacity="0.65"/>
+      <!-- Right arm extended toward lectern/scroll -->
+      <path d="M 96,172 C 106,164 114,258 118,282" stroke-width="1.2"/>
+      <!-- Left arm at side -->
+      <path d="M 64,172 C 54,180 46,188 44,198" stroke-width="1.1"/>
+
+      <!-- FIGURE RIGHT: Listener, standing, leaning in, hand to chin in thought -->
+      <circle cx="184" cy="160" r="13" stroke-width="1.3"/>
+      <path d="M 172,176 C 164,214 160,268 162,336 C 163,364 170,380 182,384 C 192,388 204,382 208,366 C 214,342 212,288 206,240 C 202,200 196,178 200,174" stroke-width="1.3"/>
+      <!-- toga drapes -->
+      <path d="M 172,182 C 182,190 196,186 202,177" stroke-width="1"/>
+      <path d="M 166,216 C 178,211 196,214 210,208" stroke-width="0.75" opacity="0.85"/>
+      <path d="M 162,260 C 176,255 196,258 212,254" stroke-width="0.7" opacity="0.75"/>
+      <path d="M 162,306 C 176,301 196,304 212,299" stroke-width="0.65" opacity="0.65"/>
+      <!-- Left arm raised, hand to chin (thinking pose) -->
+      <path d="M 172,184 C 164,174 158,165 158,158" stroke-width="1.2"/>
+      <!-- Hand at chin -->
+      <path d="M 155,155 C 152,150 153,144 158,143 C 163,142 167,146 167,152" stroke-width="0.9"/>
+      <!-- Right arm at side -->
+      <path d="M 200,180 C 210,192 214,208 212,220" stroke-width="1.1"/>
+    </svg>
+
+    <div class="land-body">
+      <p class="land-overline">[Dead Thinkers Dialogue · 10 Minds · 10 Models]</p>
+      <h1 class="land-title">THE CHAMBER<br/>OF MINDS</h1>
+      <div class="land-rule"></div>
+      <p class="land-sub">
+        Summon history's greatest intellects.<br/>
+        Watch them debate. Join the conversation.
+      </p>
+      <button class="btn-primary" onclick="App.goToSelect()">[Convene the Council →]</button>
+    </div>
+
+    <footer class="land-footer">
+      <span class="land-latin"><em>Alea iacta est</em></span>
+      <span class="land-footer-right">10 minds · 10 models · 1 debate</span>
+    </footer>
+  </div>
+
+  <!-- ── VIEW: CHARACTER SELECT ─────────────────────────────────────────────── -->
+  <div id="view-select" class="view">
+
+    <div class="sel-topbar">
+      <div class="sel-topbar-left">
+        <div class="sel-section-num">02. — Select</div>
+        <h2 class="sel-title">Convene Your Council</h2>
+        <div class="sel-instruction">[Select 2 — 3 minds to summon]</div>
+      </div>
+      <div class="sel-topbar-right">
+        <div class="sel-big-num" id="counter-text">0</div>
+        <div class="sel-big-label">of 3 chosen</div>
+        <div class="counter-pips">
+          <div class="pip" id="pip-0"></div>
+          <div class="pip" id="pip-1"></div>
+          <div class="pip" id="pip-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="thinker-grid" id="thinker-grid"></div>
+
+    <div class="sel-bottombar">
+      <span class="sel-hint">[Click to select · Maximum 3]</span>
+      <button class="btn-primary" id="enter-btn" disabled onclick="App.enterDebate()">
+        [Enter the Chamber →]
+      </button>
+    </div>
+  </div>
+
+  <!-- ── VIEW: DEBATE ───────────────────────────────────────────────────────── -->
+  <div id="view-debate" class="view">
+
+    <header class="debate-header">
+      <span class="debate-wordmark">DTD</span>
+      <div class="debate-thinkers-bar" id="debate-thinkers-bar"></div>
+      <div class="debate-view-toggle">
+        <button class="toggle-btn active" id="btn-room" onclick="App.setDebateView('room')">[Room]</button>
+        <button class="toggle-btn" id="btn-panels" onclick="App.setDebateView('panels')">[Panels]</button>
+      </div>
+    </header>
+
+    <!-- ROOM VIEW -->
+    <div id="room-view" class="debate-view active">
+      <div class="room-seats" id="room-seats"></div>
+      <div class="room-feed" id="room-feed">
+        <div class="room-empty-state" id="room-empty">
+          <p class="empty-main">The chamber awaits your question.</p>
+          <p class="empty-sub">[Type below to open the debate]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANELS VIEW -->
+    <div id="panels-view" class="debate-view">
+      <div class="panels-container" id="panels-container"></div>
+    </div>
+
+    <!-- Shared input -->
+    <div class="debate-input-area">
+      <div class="debate-input-row">
+        <div class="direct-target-badge" id="direct-target-badge" style="display:none">
+          <span id="direct-target-name"></span>
+          <button onclick="App.clearDirectTarget()">✕</button>
+        </div>
+        <div class="input-label-wrap">
+          <span class="input-field-label" id="input-field-label">[Your Question]</span>
+          <textarea
+            id="debate-input"
+            placeholder="Pose a question to the council…"
+            rows="1"
+            onkeydown="App.handleInputKey(event)"
+            oninput="App.autoResize(this)"
+          ></textarea>
+        </div>
+        <button class="send-btn" id="send-btn" onclick="App.sendQuestion()">[→]</button>
+      </div>
+      <p class="input-hint">Enter to send · Shift+Enter for new line · Click a nameplate to direct</p>
+    </div>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

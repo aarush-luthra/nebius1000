@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design Preview — Dead Thinkers Dialogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono:  'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Light palette — select screen */
+  --cream:      #f0ebe0;
+  --cream-deep: #e6dfd2;
+  --ink:        #1a150f;
+  --ink-mid:    #5a4e3e;
+  --ink-muted:  #8a7a65;
+  --terra:      #7a3020;
+  --terra-dim:  #4a1e12;
+  --ochre:      #8a6830;
+  --rule:       #ccc4b5;
+
+  /* Dark palette — debate screen */
+  --dk:         #0d0b08;
+  --dk-surface: #141109;
+  --dk-raised:  #1c1810;
+  --dk-border:  #2a2318;
+  --dk-text:    #d8ccb8;
+  --dk-mid:     #7a6a54;
+  --dk-muted:   #3a3028;
+  --dk-gold:    #b89050;
+  --dk-terra:   #7a3020;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--mono); }
+
+/* ── Screen container ───────────────────────────────────────────────────── */
+.screen {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Screen label ────────────────────────────────────────────────────────── */
+.screen-label {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SCREEN 01 — LANDING
+   ════════════════════════════════════════════════════════════════════════════ */
+#s1 {
+  background: var(--dk);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 80px;
+}
+
+.s1-header {
+  position: absolute;
+  top: 32px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.s1-wordmark {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+}
+
+.s1-nav {
+  display: flex;
+  gap: 32px;
+}
+.s1-nav a {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--dk-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.s1-nav a:hover { color: var(--dk-gold); }
+
+.s1-center {
+  text-align: center;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.s1-overline {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--terra);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.s1-title {
+  font-family: var(--serif);
+  font-size: 88px;
+  font-weight: 300;
+  line-height: 0.92;
+  color: var(--dk-text);
+  letter-spacing: -0.01em;
+}
+.s1-title em {
+  font-style: italic;
+  color: var(--dk-gold);
+}
+
+.s1-rule {
+  width: 1px;
+  height: 60px;
+  background: var(--dk-border);
+  margin: 40px auto;
+}
+
+.s1-sub {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--dk-mid);
+  letter-spacing: 0.02em;
+  margin-bottom: 52px;
+}
+
+.s1-cta {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dk-gold);
+  border: 1px solid var(--terra-dim);
+  padding: 14px 40px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.s1-cta:hover { border-color: var(--dk-gold); }
+
+.s1-footer {
+  position: absolute;
+  bottom: 32px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.s1-footer-left {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.s1-footer-right {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--dk-muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+
+.s1-index {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.s1-index-item {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.s1-index-item::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--dk-border);
+}
+.s1-index-item.active { color: var(--dk-gold); }
+.s1-index-item.active::before { background: var(--dk-gold); width: 32px; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SCREEN 02 — CHARACTER SELECT
+   ════════════════════════════════════════════════════════════════════════════ */
+#s2 {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.s2-topbar {
+  padding: 28px 40px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.s2-section-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+
+.s2-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-top: 4px;
+}
+
+.s2-instruction {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--terra);
+  text-transform: uppercase;
+}
+
+.s2-counter {
+  text-align: right;
+}
+
+.s2-counter-num {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.s2-counter-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.s2-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  border-left: 1px solid var(--rule);
+}
+
+.tcard {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+  min-height: 0;
+}
+.tcard:hover { background: var(--cream-deep); }
+
+.tcard.selected {
+  background: var(--cream-deep);
+}
+.tcard.selected::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--terra);
+}
+
+.tcard-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tcard.selected .tcard-num { color: var(--terra); }
+
+.tcard-sel-badge {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--terra);
+  color: var(--cream);
+  font-size: 8px;
+  font-weight: 500;
+  align-items: center;
+  justify-content: center;
+}
+.tcard.selected .tcard-sel-badge { display: flex; }
+
+.tcard-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.1;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.tcard-domain {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.tcard-era {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.s2-bottombar {
+  padding: 16px 40px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.s2-pips {
+  display: flex;
+  gap: 4px;
+}
+.s2-pip {
+  width: 24px;
+  height: 2px;
+  background: var(--rule);
+}
+.s2-pip.filled { background: var(--terra); }
+
+.s2-cta {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  border: 1px solid var(--terra-dim);
+  padding: 10px 28px;
+  cursor: pointer;
+  background: transparent;
+  opacity: 0.4;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.s2-cta.ready {
+  opacity: 1;
+}
+.s2-cta.ready:hover { border-color: var(--terra); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SCREEN 03 — PANELS / DEBATE (design-first view)
+   ════════════════════════════════════════════════════════════════════════════ */
+#s3 {
+  background: var(--dk);
+  display: flex;
+  flex-direction: column;
+}
+
+.s3-header {
+  height: 44px;
+  border-bottom: 1px solid var(--dk-border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.s3-logo {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  margin-right: 32px;
+}
+
+.s3-thinker-tabs {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  height: 100%;
+}
+
+.s3-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border-right: 1px solid var(--dk-border);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dk-mid);
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+}
+.s3-tab.active { color: var(--dk-text); }
+.s3-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--dk-gold);
+}
+
+.s3-tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.s3-view-btns {
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+}
+
+.s3-vbtn {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  padding: 0 14px;
+  cursor: pointer;
+  height: 100%;
+  border-left: 1px solid var(--dk-border);
+}
+.s3-vbtn.active { color: var(--dk-gold); }
+
+.s3-panels {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.s3-panel {
+  flex: 1;
+  border-right: 1px solid var(--dk-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.s3-panel:last-child { border-right: none; }
+
+.s3-panel-head {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--dk-border);
+  flex-shrink: 0;
+}
+
+.s3-panel-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--dk-muted);
+  margin-bottom: 6px;
+}
+
+.s3-panel-name {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--dk-text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.s3-panel-meta {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+}
+
+.s3-panel-model {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--terra);
+  margin-top: 4px;
+}
+
+.s3-panel-ask {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--dk-border);
+  padding: 7px 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+.s3-panel-ask:hover { border-color: var(--dk-gold); color: var(--dk-gold); }
+
+.s3-thinking-area {
+  background: #111009;
+  border-bottom: 1px solid var(--dk-border);
+  padding: 14px 24px;
+  flex-shrink: 0;
+}
+
+.s3-think-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s3-think-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--dk-border);
+}
+
+.s3-think-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--dk-muted);
+  line-height: 1.6;
+}
+
+.s3-responses {
+  flex: 1;
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.s3-response-block {}
+
+.s3-response-q {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--dk-border);
+}
+
+.s3-response-text {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--dk-text);
+  font-weight: 300;
+}
+
+.s3-empty {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--dk-muted);
+  font-size: 15px;
+  text-align: center;
+  margin: auto;
+}
+
+.s3-input-area {
+  border-top: 1px solid var(--dk-border);
+  padding: 14px 24px;
+  background: var(--dk-surface);
+  flex-shrink: 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.s3-input-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-bottom: 12px;
+}
+
+.s3-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--dk-border);
+  padding: 8px 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--dk-text);
+  outline: none;
+}
+.s3-input::placeholder { color: var(--dk-muted); font-style: italic; }
+
+.s3-send {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--dk-gold);
+  background: transparent;
+  border: 1px solid var(--terra-dim);
+  padding: 9px 18px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: border-color 0.2s;
+  white-space: nowrap;
+}
+.s3-send:hover { border-color: var(--dk-gold); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SCREEN 04 — ROOM VIEW
+   ════════════════════════════════════════════════════════════════════════════ */
+#s4 {
+  background: var(--dk);
+  display: flex;
+  flex-direction: column;
+}
+
+.s4-header {
+  height: 44px;
+  border-bottom: 1px solid var(--dk-border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.s4-logo {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+}
+
+.s4-thinker-chips {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+}
+
+.s4-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dk-mid);
+  text-transform: uppercase;
+  border: 1px solid var(--dk-border);
+  padding: 4px 10px 4px 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.s4-chip:hover { border-color: var(--dk-gold); color: var(--dk-text); }
+
+.s4-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.s4-vbtn { margin-left: auto; }
+
+.s4-seats-bar {
+  border-bottom: 1px solid var(--dk-border);
+  background: var(--dk-surface);
+  padding: 14px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  flex-shrink: 0;
+}
+
+.s4-seat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.s4-seat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--dk-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--dk-mid);
+  background: var(--dk-raised);
+  transition: border-color 0.2s;
+}
+.s4-seat:hover .s4-seat-avatar { border-color: var(--dk-gold); }
+.s4-seat.speaking .s4-seat-avatar {
+  border-color: var(--dk-gold);
+  color: var(--dk-gold);
+}
+
+.s4-seat-name {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+}
+
+.s4-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 900px;
+  width: 100%;
+  align-self: center;
+}
+
+.s4-msg {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.s4-msg.user-msg {
+  flex-direction: row-reverse;
+  max-width: 520px;
+  align-self: flex-end;
+}
+
+.s4-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.s4-body { flex: 1; min-width: 0; }
+
+.s4-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.s4-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.s4-model-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--dk-muted);
+  border: 1px solid var(--dk-border);
+  padding: 1px 6px;
+}
+
+.s4-think-btn {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--dk-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 0;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+.s4-think-btn:hover { color: var(--dk-gold); }
+
+.s4-thinking-block {
+  background: #111009;
+  border-left: 1px solid var(--dk-border);
+  padding: 8px 14px;
+  margin-bottom: 10px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--dk-muted);
+  line-height: 1.55;
+}
+
+.s4-text {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--dk-text);
+  font-weight: 300;
+  padding-left: 14px;
+  border-left: 1px solid transparent;
+}
+
+.s4-msg.user-msg .s4-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dk-mid);
+  background: var(--dk-raised);
+  border: 1px solid var(--dk-border);
+  border-left: 1px solid var(--dk-border);
+  padding: 10px 14px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.s4-input-area {
+  border-top: 1px solid var(--dk-border);
+  padding: 16px 80px 18px;
+  background: var(--dk-surface);
+  flex-shrink: 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  max-width: 900px;
+  width: 100%;
+  align-self: center;
+}
+
+.s4-input-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.s4-input-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--dk-muted);
+  text-transform: uppercase;
+}
+
+.s4-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--dk-border);
+  padding: 8px 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--dk-text);
+  outline: none;
+  width: 100%;
+}
+.s4-input::placeholder { color: var(--dk-muted); font-style: italic; }
+
+.s4-send {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--dk-gold);
+  background: transparent;
+  border: 1px solid var(--terra-dim);
+  padding: 9px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* ── Nav dots ────────────────────────────────────────────────────────────── */
+.nav-dots {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+.nav-dot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-dot-pip {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.2s, width 0.2s;
+}
+.nav-dot:hover .nav-dot-pip { background: rgba(255,255,255,0.4); }
+.nav-dot.active .nav-dot-pip { background: #b89050; width: 16px; border-radius: 2px; }
+.nav-dot-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.nav-dot:hover .nav-dot-label { opacity: 1; }
+.nav-dot.active .nav-dot-label { opacity: 0.6; color: #b89050; }
+
+/* Override nav dot colors for light screens */
+#s2 ~ * .nav-dot-pip { background: rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+
+<!-- Navigation dots -->
+<nav class="nav-dots">
+  <a class="nav-dot active" href="#s1"><div class="nav-dot-pip"></div><span class="nav-dot-label">Landing</span></a>
+  <a class="nav-dot" href="#s2"><div class="nav-dot-pip"></div><span class="nav-dot-label">Select</span></a>
+  <a class="nav-dot" href="#s3"><div class="nav-dot-pip"></div><span class="nav-dot-label">Panels</span></a>
+  <a class="nav-dot" href="#s4"><div class="nav-dot-pip"></div><span class="nav-dot-label">Room</span></a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCREEN 01 — LANDING
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section class="screen" id="s1">
+
+  <div class="s1-header">
+    <div>
+      <div class="s1-wordmark">Dead Thinkers Dialogue</div>
+    </div>
+    <nav class="s1-nav">
+      <a href="#">About</a>
+      <a href="#">The Council</a>
+      <a href="#">Nebius AI</a>
+    </nav>
+  </div>
+
+  <div class="s1-center">
+    <div class="s1-overline">[Dead Thinkers Dialogue · Nebius Token Factory · 2026]</div>
+    <h1 class="s1-title">The Chamber<br/><em>of Minds</em></h1>
+    <div class="s1-rule"></div>
+    <p class="s1-sub">
+      Summon history's greatest intellects.<br/>
+      Watch them debate. Join the conversation.
+    </p>
+    <a href="#s2" class="s1-cta">[Convene the Council →]</a>
+  </div>
+
+  <div class="s1-footer">
+    <div class="s1-footer-left">
+      10 minds · 10 models<br/>
+      Powered by Nebius AI
+    </div>
+    <div class="s1-footer-right">
+      Alea iacta est
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCREEN 02 — CHARACTER SELECT
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section class="screen" id="s2">
+
+  <div class="s2-topbar">
+    <div>
+      <div class="s2-section-num">02. — Select</div>
+      <h2 class="s2-title">Convene Your Council</h2>
+      <div class="s2-instruction">[Select 2 — 3 minds to summon]</div>
+    </div>
+    <div class="s2-counter">
+      <div class="s2-counter-num" id="sel-count">2</div>
+      <div class="s2-counter-label">of 3 chosen</div>
+      <div class="s2-pips" style="margin-top:8px; justify-content: flex-end;">
+        <div class="s2-pip filled"></div>
+        <div class="s2-pip filled"></div>
+        <div class="s2-pip"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s2-grid">
+    <!-- Row 1 -->
+    <div class="tcard selected">
+      <div class="tcard-num">01. <div class="tcard-sel-badge">1</div></div>
+      <div class="tcard-name">Alan Turing</div>
+      <div class="tcard-domain">Technology &amp; AI</div>
+      <div class="tcard-era">20th Century</div>
+    </div>
+    <div class="tcard selected">
+      <div class="tcard-num">02. <div class="tcard-sel-badge">2</div></div>
+      <div class="tcard-name">Albert Einstein</div>
+      <div class="tcard-domain">Science &amp; Physics</div>
+      <div class="tcard-era">20th Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">03. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Elon Musk</div>
+      <div class="tcard-domain">Tech Entrepreneurship</div>
+      <div class="tcard-era">21st Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">04. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Narendra Modi</div>
+      <div class="tcard-domain">Politics &amp; Governance</div>
+      <div class="tcard-era">21st Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">05. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Cleopatra</div>
+      <div class="tcard-domain">Leadership &amp; Power</div>
+      <div class="tcard-era">Ancient World</div>
+    </div>
+    <!-- Row 2 -->
+    <div class="tcard">
+      <div class="tcard-num">06. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Sun Tzu</div>
+      <div class="tcard-domain">Strategy &amp; Warfare</div>
+      <div class="tcard-era">Ancient World</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">07. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Nikola Tesla</div>
+      <div class="tcard-domain">Invention &amp; Vision</div>
+      <div class="tcard-era">19th–20th Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">08. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Donald Trump</div>
+      <div class="tcard-domain">Business &amp; Politics</div>
+      <div class="tcard-era">21st Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">09. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Warren Buffett</div>
+      <div class="tcard-domain">Finance &amp; Investing</div>
+      <div class="tcard-era">20th–21st Century</div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-num">10. <div class="tcard-sel-badge"></div></div>
+      <div class="tcard-name">Kevin O'Leary</div>
+      <div class="tcard-domain">Venture &amp; Investing</div>
+      <div class="tcard-era">21st Century</div>
+    </div>
+  </div>
+
+  <div class="s2-bottombar">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:var(--ink-muted);text-transform:uppercase;">
+      Click to select · maximum 3
+    </div>
+    <button class="s2-cta ready">[Enter the Chamber →]</button>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCREEN 03 — PANELS VIEW
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section class="screen" id="s3">
+
+  <header class="s3-header">
+    <div class="s3-logo">DTD</div>
+    <div class="s3-thinker-tabs">
+      <div class="s3-tab active">
+        <div class="s3-tab-dot" style="background:#4a7fa8"></div>
+        Alan Turing
+      </div>
+      <div class="s3-tab">
+        <div class="s3-tab-dot" style="background:#a87d4a"></div>
+        Albert Einstein
+      </div>
+    </div>
+    <div class="s3-view-btns">
+      <button class="s3-vbtn">[Room]</button>
+      <button class="s3-vbtn active">[Panels]</button>
+    </div>
+  </header>
+
+  <div class="s3-panels">
+
+    <!-- Panel 1 — Turing -->
+    <div class="s3-panel">
+      <div class="s3-panel-head">
+        <div class="s3-panel-num">01. — Alan Turing</div>
+        <div class="s3-panel-name">Alan Turing</div>
+        <div class="s3-panel-meta">Technology &amp; AI · 20th Century</div>
+        <div class="s3-panel-model">meta-llama/Llama-3.3-70B-Instruct</div>
+        <button class="s3-panel-ask">[Ask Turing directly →]</button>
+      </div>
+
+      <div class="s3-thinking-area">
+        <div class="s3-think-label">[Internal Reasoning]</div>
+        <div class="s3-think-text">
+          The question of financial control reduces to an optimisation problem with incomplete information —
+          the human element introduces variables no finite state machine can fully enumerate.
+        </div>
+      </div>
+
+      <div class="s3-responses">
+        <div class="s3-response-block">
+          <div class="s3-response-q">[Re: Should AI control global financial markets?]</div>
+          <div class="s3-response-text">
+            A machine that can compute every variable in a market is conceivable — the Turing machine permits it in principle.
+            But the question is not whether it <em>can</em> be done, but whether we have written the correct programme.
+            Give a machine the wrong objective function and it will optimise us straight into ruin, with perfect efficiency.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2 — Einstein -->
+    <div class="s3-panel">
+      <div class="s3-panel-head">
+        <div class="s3-panel-num">02. — Albert Einstein</div>
+        <div class="s3-panel-name">Albert Einstein</div>
+        <div class="s3-panel-meta">Science &amp; Physics · 20th Century</div>
+        <div class="s3-panel-model">Qwen/Qwen3-32B</div>
+        <button class="s3-panel-ask">[Ask Einstein directly →]</button>
+      </div>
+
+      <div class="s3-thinking-area">
+        <div class="s3-think-label">[Internal Reasoning]</div>
+        <div class="s3-think-text">
+          The market is a human system, and human systems are governed by psychology as much as by physics.
+          An AI cannot model irrational fear — only its statistical ghost.
+        </div>
+      </div>
+
+      <div class="s3-responses">
+        <div class="s3-response-block">
+          <div class="s3-response-q">[Re: Should AI control global financial markets?]</div>
+          <div class="s3-response-text">
+            Imagination is more important than knowledge — and a machine, however powerful, has only knowledge.
+            Markets are driven by human hope, human panic, and human greed; these are not equations, they are stories.
+            A machine that controls money without understanding fear is a god that has never wept.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="s3-input-area">
+    <div class="s3-input-label">[Your Question]</div>
+    <input class="s3-input" placeholder="Pose a question to the council…" />
+    <button class="s3-send">[Send →]</button>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCREEN 04 — ROOM VIEW
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section class="screen" id="s4">
+
+  <header class="s4-header">
+    <div class="s4-logo">DTD</div>
+    <div class="s4-thinker-chips">
+      <div class="s4-chip">
+        <div class="s4-chip-dot" style="background:#4a7fa8"></div>
+        Alan Turing
+      </div>
+      <div class="s4-chip">
+        <div class="s4-chip-dot" style="background:#a87d4a"></div>
+        Albert Einstein
+      </div>
+    </div>
+    <div class="s3-view-btns s4-vbtn">
+      <button class="s3-vbtn active">[Room]</button>
+      <button class="s3-vbtn">[Panels]</button>
+    </div>
+  </header>
+
+  <div class="s4-seats-bar">
+    <div class="s4-seat speaking">
+      <div class="s4-seat-avatar">AT</div>
+      <div class="s4-seat-name">Turing</div>
+    </div>
+    <div class="s4-seat">
+      <div class="s4-seat-avatar">AE</div>
+      <div class="s4-seat-name">Einstein</div>
+    </div>
+  </div>
+
+  <div class="s4-feed">
+
+    <!-- User message -->
+    <div class="s4-msg user-msg">
+      <div class="s4-body">
+        <div class="s4-meta" style="flex-direction:row-reverse">
+          <span class="s4-name" style="color:var(--dk-muted)">You</span>
+        </div>
+        <div class="s4-text">Should AI control global financial markets?</div>
+      </div>
+    </div>
+
+    <!-- Turing message -->
+    <div class="s4-msg">
+      <div class="s4-avatar" style="background:#1e2e3a; color:#4a7fa8">AT</div>
+      <div class="s4-body">
+        <div class="s4-meta">
+          <span class="s4-name" style="color:#4a7fa8">Alan Turing</span>
+          <span class="s4-model-tag">Llama-3.3-70B</span>
+          <button class="s4-think-btn">[show thinking]</button>
+        </div>
+        <div class="s4-thinking-block">
+          The question of financial control reduces to an optimisation problem with incomplete information…
+        </div>
+        <div class="s4-text" style="border-left-color:#4a7fa840">
+          A machine that can compute every variable in a market is conceivable — the Turing machine permits it in principle.
+          But the question is not whether it <em>can</em> be done, but whether we have written the correct programme.
+          Give a machine the wrong objective function and it will optimise us straight into ruin, with perfect efficiency.
+        </div>
+      </div>
+    </div>
+
+    <!-- Einstein message -->
+    <div class="s4-msg">
+      <div class="s4-avatar" style="background:#2e2418; color:#a87d4a">AE</div>
+      <div class="s4-body">
+        <div class="s4-meta">
+          <span class="s4-name" style="color:#a87d4a">Albert Einstein</span>
+          <span class="s4-model-tag">Qwen3-32B</span>
+          <button class="s4-think-btn">[show thinking]</button>
+        </div>
+        <div class="s4-text" style="border-left-color:#a87d4a40">
+          Imagination is more important than knowledge — and a machine, however powerful, has only knowledge.
+          Markets are driven by human hope, human panic, and human greed; these are not equations, they are stories.
+          A machine that controls money without understanding fear is a god that has never wept.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="s4-input-area">
+    <div class="s4-input-wrap">
+      <div class="s4-input-label">[Pose your question to the council]</div>
+      <input class="s4-input" placeholder="Ask a follow-up…" />
+    </div>
+    <button class="s4-send">[Send →]</button>
+  </div>
+
+</section>
+
+<script>
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['s1','s2','s3','s4'];
+
+function updateDots() {
+  const scrollY = window.scrollY;
+  const h = window.innerHeight;
+  const idx = Math.round(scrollY / h);
+  dots.forEach((d,i) => d.classList.toggle('active', i === idx));
+}
+
+window.addEventListener('scroll', updateDots, { passive: true });
+updateDots();
+</script>
+</body>
+</html>
