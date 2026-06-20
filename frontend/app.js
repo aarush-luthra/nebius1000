@@ -275,7 +275,7 @@ function createRoomMessagePlaceholder(id, thinker) {
   div.innerHTML = `
     <div class="msg-avatar" style="background:${thinker.color}">
       ${thinker.image
-        ? `<img src="${thinker.image}" alt="${thinker.name}" />`
+        ? `<img src="${thinker.image}" alt="${thinker.name}" onerror="this.onerror=null;this.src=this.src.replace('.png','.svg')" />`
         : thinker.initials}
     </div>
     <div class="msg-body">
@@ -412,15 +412,15 @@ function buildDiningTable() {
     table.appendChild(candle);
   });
 
-  // Seat positions relative to scene center (scene is 210px tall, table centered)
+  // Seat positions relative to scene center (scene is 290px tall, table centered)
   const POSITIONS = {
-    2: [{ x: -170, y: 0 }, { x: 170, y: 0 }],
-    3: [{ x: -170, y: -24 }, { x: 170, y: -24 }, { x: 0, y: 82 }],
+    2: [{ x: -218, y: 0 }, { x: 218, y: 0 }],
+    3: [{ x: -218, y: -30 }, { x: 218, y: -30 }, { x: 0, y: 108 }],
   };
   const n = state.selected.length;
   const positions = POSITIONS[n] || POSITIONS[2];
-  // Scene vertical center: 105px from top
-  const sceneMidY = 105;
+  // Scene vertical center: 145px from top
+  const sceneMidY = 145;
 
   state.selected.forEach((id, i) => {
     const t = getThinker(id);
@@ -430,12 +430,12 @@ function buildDiningTable() {
     seat.id = `table-seat-${id}`;
     seat.title = `Direct a question to ${t.name}`;
     seat.onclick = () => App.setDirectTarget(id);
-    // Portrait is 64×77, name ~20px → total ~97px; anchor at portrait top-center
-    seat.style.cssText = `position:absolute;left:calc(50% + ${pos.x - 32}px);top:${sceneMidY + pos.y - 48}px;`;
+    // Portrait is 88×106, name ~20px → total ~126px; anchor at portrait top-center
+    seat.style.cssText = `position:absolute;left:calc(50% + ${pos.x - 44}px);top:${sceneMidY + pos.y - 63}px;`;
     seat.innerHTML = `
       <div class="table-seat-portrait" style="border-color:${t.color}40">
         ${t.image
-          ? `<img src="${t.image}" alt="${t.name}">`
+          ? `<img src="${t.image}" alt="${t.name}" onerror="this.onerror=null;this.src=this.src.replace('.png','.svg')">`
           : `<div class="table-seat-initials" style="color:${t.color}">${t.initials}</div>`}
       </div>
       <div class="table-seat-name">${t.name.split(' ')[0]}</div>
@@ -517,7 +517,7 @@ function renderSelectGrid() {
     card.innerHTML = `
       <div class="card-portrait-full">
         ${t.image
-          ? `<img src="${t.image}" alt="${t.name}" />`
+          ? `<img src="${t.image}" alt="${t.name}" onerror="this.onerror=null;this.src=this.src.replace('.png','.svg')" />`
           : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:48px;color:${t.color};background:var(--bg-alt)">${t.initials}</div>`}
         <div class="card-overlay">
           <span class="card-num" id="cardnum-${t.id}">${String(i + 1).padStart(2, '0')}.</span>
@@ -595,16 +595,16 @@ function escHtml(str) {
 
 /* ── Fallback roster (used if backend unreachable) ────────────────────────── */
 const FALLBACK_THINKERS = [
-  { id: 'modi',      name: 'Narendra Modi',   domain: 'Politics & Governance', era: '21st Century',      color: '#6a3a10', initials: 'NM', image: '/static/portraits/modi.svg' },
-  { id: 'einstein',  name: 'Albert Einstein', domain: 'Science & Physics',     era: '20th Century',      color: '#7a5820', initials: 'AE', image: '/static/portraits/einstein.svg' },
-  { id: 'musk',      name: 'Elon Musk',       domain: 'Tech Entrepreneurship', era: '21st Century',      color: '#1a5a5a', initials: 'EM', image: '/static/portraits/musk.svg' },
-  { id: 'kalam',     name: 'APJ Abdul Kalam', domain: 'Science & Leadership',  era: '20th–21st Century', color: '#1a3a6a', initials: 'AK', image: '/static/portraits/kalam.svg' },
-  { id: 'cleopatra', name: 'Cleopatra',       domain: 'Leadership & Power',    era: 'Ancient World',     color: '#6a5010', initials: 'CL', image: '/static/portraits/cleopatra.svg' },
-  { id: 'michelle',  name: 'Michelle Obama',  domain: 'Leadership & Advocacy', era: '21st Century',      color: '#5a1a3a', initials: 'MO', image: '/static/portraits/michelle.svg' },
-  { id: 'tesla',     name: 'Nikola Tesla',    domain: 'Invention & Vision',    era: '19th–20th Century', color: '#3a2a6a', initials: 'NT', image: '/static/portraits/tesla.svg' },
-  { id: 'trump',     name: 'Donald Trump',    domain: 'Business & Politics',   era: '21st Century',      color: '#6a1a1a', initials: 'DT', image: '/static/portraits/trump.svg' },
-  { id: 'buffett',   name: 'Warren Buffett',  domain: 'Finance & Investing',   era: '20th–21st Century', color: '#1a4a1a', initials: 'WB', image: '/static/portraits/buffett.svg' },
-  { id: 'curie',     name: 'Marie Curie',     domain: 'Science & Discovery',   era: '19th–20th Century', color: '#0a4040', initials: 'MC', image: '/static/portraits/curie.svg' },
+  { id: 'modi',      name: 'Narendra Modi',   domain: 'Politics & Governance', era: '21st Century',      color: '#6a3a10', initials: 'NM', image: '/static/portraits/modi.png' },
+  { id: 'einstein',  name: 'Albert Einstein', domain: 'Science & Physics',     era: '20th Century',      color: '#7a5820', initials: 'AE', image: '/static/portraits/einstein.png' },
+  { id: 'musk',      name: 'Elon Musk',       domain: 'Tech Entrepreneurship', era: '21st Century',      color: '#1a5a5a', initials: 'EM', image: '/static/portraits/musk.png' },
+  { id: 'kalam',     name: 'APJ Abdul Kalam', domain: 'Science & Leadership',  era: '20th–21st Century', color: '#1a3a6a', initials: 'AK', image: '/static/portraits/kalam.png' },
+  { id: 'cleopatra', name: 'Cleopatra',       domain: 'Leadership & Power',    era: 'Ancient World',     color: '#6a5010', initials: 'CL', image: '/static/portraits/cleopatra.png' },
+  { id: 'michelle',  name: 'Michelle Obama',  domain: 'Leadership & Advocacy', era: '21st Century',      color: '#5a1a3a', initials: 'MO', image: '/static/portraits/michelle.png' },
+  { id: 'tesla',     name: 'Nikola Tesla',    domain: 'Invention & Vision',    era: '19th–20th Century', color: '#3a2a6a', initials: 'NT', image: '/static/portraits/tesla.png' },
+  { id: 'trump',     name: 'Donald Trump',    domain: 'Business & Politics',   era: '21st Century',      color: '#6a1a1a', initials: 'DT', image: '/static/portraits/trump.png' },
+  { id: 'buffett',   name: 'Warren Buffett',  domain: 'Finance & Investing',   era: '20th–21st Century', color: '#1a4a1a', initials: 'WB', image: '/static/portraits/buffett.png' },
+  { id: 'curie',     name: 'Marie Curie',     domain: 'Science & Discovery',   era: '19th–20th Century', color: '#0a4040', initials: 'MC', image: '/static/portraits/curie.png' },
 ];
 
 /* ── Boot ─────────────────────────────────────────────────────────────────── */

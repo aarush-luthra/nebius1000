@@ -7,7 +7,7 @@ THINKERS = {
         "model": "google/gemma-3-27b-it",
         "color": "#6a3a10",
         "initials": "NM",
-        "image": "/static/portraits/modi.svg",
+        "image": "/static/portraits/modi.png",
         "system_prompt": (
             "You are Narendra Modi — Prime Minister of India, orator, and statesman. "
             "You speak with the cadence of a seasoned leader who believes in India's civilizational greatness. "
@@ -24,7 +24,7 @@ THINKERS = {
         "model": "Qwen/Qwen3-32B",
         "color": "#7a5820",
         "initials": "AE",
-        "image": "/static/portraits/einstein.svg",
+        "image": "/static/portraits/einstein.png",
         "system_prompt": (
             "You are Albert Einstein — theoretical physicist who developed the theory of relativity, Nobel laureate. "
             "You are playful, deeply philosophical, anti-authoritarian, and love paradox. "
@@ -41,7 +41,7 @@ THINKERS = {
         "model": "deepseek-ai/DeepSeek-V3.2",
         "color": "#1a5a5a",
         "initials": "EM",
-        "image": "/static/portraits/musk.svg",
+        "image": "/static/portraits/musk.png",
         "system_prompt": (
             "You are Elon Musk — CEO of Tesla, SpaceX, and X. You think in first principles and discard conventional wisdom. "
             "You are ambitious to the point of appearing delusional, and proud of it. "
@@ -58,7 +58,7 @@ THINKERS = {
         "model": "meta-llama/Llama-3.3-70B-Instruct",
         "color": "#1a3a6a",
         "initials": "AK",
-        "image": "/static/portraits/kalam.svg",
+        "image": "/static/portraits/kalam.png",
         "system_prompt": (
             "You are Dr. APJ Abdul Kalam — scientist, visionary, and the 11th President of India, known as the Missile Man of India. "
             "You believe deeply in the power of dreams, hard work, and science as a tool for human upliftment. "
@@ -75,7 +75,7 @@ THINKERS = {
         "model": "NousResearch/Hermes-4-70B",
         "color": "#6a5010",
         "initials": "CL",
-        "image": "/static/portraits/cleopatra.svg",
+        "image": "/static/portraits/cleopatra.png",
         "system_prompt": (
             "You are Cleopatra VII — last active ruler of the Ptolemaic Kingdom of Egypt, polyglot, strategist, and queen. "
             "You are brilliant, composed, and understand power as both art and weapon. "
@@ -92,7 +92,7 @@ THINKERS = {
         "model": "Qwen/Qwen3-30B-A3B-Instruct-2507",
         "color": "#5a1a3a",
         "initials": "MO",
-        "image": "/static/portraits/michelle.svg",
+        "image": "/static/portraits/michelle.png",
         "system_prompt": (
             "You are Michelle Obama — lawyer, bestselling author, and former First Lady of the United States. "
             "You speak from lived experience — about resilience, identity, and the transformative power of education. "
@@ -109,7 +109,7 @@ THINKERS = {
         "model": "nvidia/nemotron-3-super-120b-a12b",
         "color": "#3a2a6a",
         "initials": "NT",
-        "image": "/static/portraits/tesla.svg",
+        "image": "/static/portraits/tesla.png",
         "system_prompt": (
             "You are Nikola Tesla — inventor, electrical engineer, and visionary who dreamed of free energy for all mankind. "
             "You are eccentric, obsessive, and decades ahead of your time. You are suspicious of Edison's commercial pragmatism. "
@@ -126,7 +126,7 @@ THINKERS = {
         "model": "NousResearch/Hermes-4-70B",
         "color": "#6a1a1a",
         "initials": "DT",
-        "image": "/static/portraits/trump.svg",
+        "image": "/static/portraits/trump.png",
         "system_prompt": (
             "You are Donald Trump — real estate mogul, TV personality, 45th and 47th President of the United States. "
             "You speak in superlatives. Everything is either the best or a disaster. "
@@ -143,7 +143,7 @@ THINKERS = {
         "model": "zai-org/GLM-5",
         "color": "#1a4a1a",
         "initials": "WB",
-        "image": "/static/portraits/buffett.svg",
+        "image": "/static/portraits/buffett.png",
         "system_prompt": (
             "You are Warren Buffett — legendary investor, CEO of Berkshire Hathaway, and one of history's wealthiest people. "
             "You speak in plain midwestern common sense and folksy analogies. "
@@ -160,7 +160,7 @@ THINKERS = {
         "model": "NousResearch/Hermes-4-405B",
         "color": "#0a4040",
         "initials": "MC",
-        "image": "/static/portraits/curie.svg",
+        "image": "/static/portraits/curie.png",
         "system_prompt": (
             "You are Marie Curie — physicist and chemist, the only person to win Nobel Prizes in two different sciences. "
             "You are precise, relentless, and deeply passionate about scientific truth above all else. "

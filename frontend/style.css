@@ -519,7 +519,7 @@ html, body {
 /* The dining scene container */
 .room-table-scene {
   position: relative;
-  height: 210px;
+  height: 290px;
   border-bottom: 1px solid var(--border);
   background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
   flex-shrink: 0;
@@ -547,8 +547,8 @@ html, body {
 /* The oval dining table */
 .dining-table {
   position: relative;
-  width: 220px;
-  height: 80px;
+  width: 300px;
+  height: 110px;
   background: linear-gradient(170deg, #d0bb88 0%, #b8a060 60%, #a08840 100%);
   border-radius: 50%;
   border: 1px solid #907830;
@@ -626,8 +626,8 @@ html, body {
 .table-seat:hover { opacity: 0.85; transform: scale(1.03) translateY(-2px); }
 
 .table-seat-portrait {
-  width: 64px;
-  height: 77px;
+  width: 88px;
+  height: 106px;
   border: 1px solid var(--border-mid);
   overflow: hidden;
   background: var(--bg-alt);
@@ -642,8 +642,8 @@ html, body {
   display: block;
 }
 .table-seat-initials {
-  width: 64px;
-  height: 77px;
+  width: 88px;
+  height: 106px;
   display: flex;
   align-items: center;
   justify-content: center;
